@@ -46,12 +46,15 @@ namespace SkinHide
             new BotOwnerPatch().Enable();
         }
         void Update()
-        {      
+        {
+            //PlayerModelView Skin Hide
             if (PlayerModelView != null && KeyPlayerSkinHide.Value)
             {
+                //Get PlayerModelView all SkinDress and Dress
                 PlayerMVSkinDress = PlayerModelView.GetComponentsInChildren<SkinDress>();
                 PlayerMVDress = PlayerModelView.GetComponentsInChildren<Dress>();
 
+                //false SkinDress and Dress GameObject
                 if (PlayerMVSkinDress != null)
                 {
                     foreach (SkinDress skindress in PlayerMVSkinDress)
@@ -67,11 +70,14 @@ namespace SkinHide
                     }
                 }
             }
+            //Player Skin Hide
             if (Player != null)
             {
+                //Get Player all SkinDress and Dress
                 PlayerSkinDress = Player.GetComponentsInChildren<SkinDress>();
                 PlayerDress = Player.GetComponentsInChildren<Dress>();
 
+                //false SkinDress and Dress GameObject
                 if (PlayerSkinDress != null)
                 {
                     foreach (SkinDress skindress in PlayerSkinDress)
@@ -87,6 +93,7 @@ namespace SkinHide
                     }   
                 }
 
+                //false or true SkinDress and Dress GameObject
                 if (PlayerSkinGameObject != null)
                 {
                     foreach (GameObject skin in PlayerSkinGameObject)
@@ -97,12 +104,16 @@ namespace SkinHide
             }
             else
             {
+                //Quit Raid Clear GameObject List
                 PlayerSkinGameObject.Clear();
             }
 
+            //Clear List null Bot
             Bot.RemoveAll(x => x == null);
+            //Bot Skin Hide
             if (Bot.Count > 0)
             {
+                //Get Bot all SkinDress and Dress
                 foreach (GameObject bot in Bot)
                 {
                     BotSkinDress = bot.GetComponentsInChildren<SkinDress>();
@@ -124,6 +135,7 @@ namespace SkinHide
                     }
                 }
 
+                //false or true SkinDress and Dress GameObject
                 if (BotSkinGameObject != null)
                 {
                     foreach (GameObject botskin in BotSkinGameObject)
@@ -134,6 +146,7 @@ namespace SkinHide
             }
             else
             {
+                //Quit Raid Clear GameObject List
                 BotSkinGameObject.Clear();
             }
         }
