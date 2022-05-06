@@ -93,7 +93,7 @@ namespace SkinHide
                     }   
                 }
 
-                //false or true SkinDress and Dress GameObject
+                //False or true SkinDress and Dress GameObject
                 if (PlayerSkinGameObject != null)
                 {
                     foreach (GameObject skin in PlayerSkinGameObject)
