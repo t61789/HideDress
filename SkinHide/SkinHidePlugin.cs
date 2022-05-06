@@ -26,11 +26,11 @@ namespace SkinHide
 
         public static List <GameObject> Bot = new List<GameObject>();
 
-        public HashSet<GameObject> BotSkinGameObject = new HashSet<GameObject>();
-
         public SkinDress[] BotSkinDress;
 
         public Dress[] BotDress;
+
+        public HashSet<GameObject> BotSkinGameObject = new HashSet<GameObject>();
 
         public static ConfigEntry<bool> KeyPlayerSkinHide { get; set; }
         public static ConfigEntry<bool> KeyBotSkinHide { get; set; }
