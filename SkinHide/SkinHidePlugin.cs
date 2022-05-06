@@ -54,7 +54,7 @@ namespace SkinHide
                 PlayerMVSkinDress = PlayerModelView.GetComponentsInChildren<SkinDress>();
                 PlayerMVDress = PlayerModelView.GetComponentsInChildren<Dress>();
 
-                //false SkinDress and Dress GameObject
+                //False SkinDress and Dress GameObject
                 if (PlayerMVSkinDress != null)
                 {
                     foreach (SkinDress skindress in PlayerMVSkinDress)
@@ -77,7 +77,7 @@ namespace SkinHide
                 PlayerSkinDress = Player.GetComponentsInChildren<SkinDress>();
                 PlayerDress = Player.GetComponentsInChildren<Dress>();
 
-                //false SkinDress and Dress GameObject
+                //False SkinDress and Dress GameObject
                 if (PlayerSkinDress != null)
                 {
                     foreach (SkinDress skindress in PlayerSkinDress)
@@ -135,7 +135,7 @@ namespace SkinHide
                     }
                 }
 
-                //false or true SkinDress and Dress GameObject
+                //False or true SkinDress and Dress GameObject
                 if (BotSkinGameObject != null)
                 {
                     foreach (GameObject botskin in BotSkinGameObject)
