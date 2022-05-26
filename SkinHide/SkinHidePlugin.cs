@@ -151,6 +151,7 @@ namespace SkinHide
                         }
                     }
 
+                    //Loot from List Remove 
                     if (Loot != null)
                     {
                         PlayerSkinGameObject.ExceptWith(Loot);
@@ -214,6 +215,7 @@ namespace SkinHide
                         }
                     }
 
+                    //Loot from List Remove 
                     if (Loot != null)
                     {
                         BotDressGameObject.ExceptWith(Loot);
@@ -239,6 +241,7 @@ namespace SkinHide
                         }
                     }
 
+                    //Loot from List Remove 
                     if (Loot != null)
                     {
                         BotSkinGameObject.ExceptWith(Loot);
