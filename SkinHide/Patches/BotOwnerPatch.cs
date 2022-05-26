@@ -7,7 +7,6 @@ namespace SkinHide.Patches
 {
     public class BotOwnerPatch : ModulePatch
     {
-
         protected override MethodBase GetTargetMethod()
         {
             return typeof(BotOwner).GetMethod("method_4", PatchConstants.PrivateFlags);
