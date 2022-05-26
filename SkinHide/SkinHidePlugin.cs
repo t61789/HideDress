@@ -126,6 +126,7 @@ namespace SkinHide
                         }
                     }
 
+                    //Loot from List Remove 
                     if (Loot != null)
                     {
                         PlayerDressGameObject.ExceptWith(Loot);
