@@ -1,10 +1,10 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
+using System.Collections.Generic;
 using UnityEngine;
-using SkinHide.Patches;
 using EFT;
 using EFT.Visual;
-using System.Collections.Generic;
+using SkinHide.Patches;
 
 namespace SkinHide
 {
@@ -256,6 +256,5 @@ namespace SkinHide
                 BotDressGameObject.Clear();
             }
         }
-
     }
 }
