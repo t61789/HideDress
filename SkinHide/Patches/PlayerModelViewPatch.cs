@@ -8,7 +8,6 @@ namespace SkinHide.Patches
 {
     public class PlayerModelViewPatch : ModulePatch
     {
-
         protected override MethodBase GetTargetMethod()
         {
             return typeof(PlayerModelView).GetMethod("method_0", PatchConstants.PrivateFlags);

@@ -7,7 +7,6 @@ namespace SkinHide.Patches
 {
     public class GamePlayerOwnerPatch : ModulePatch
     {
-
         protected override MethodBase GetTargetMethod()
         {
             return typeof(GamePlayerOwner).GetMethod("method_6", PatchConstants.PrivateFlags);
