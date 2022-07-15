@@ -69,9 +69,9 @@ namespace SkinHide
             //Bot Skin Hide
             if (Bot.Count > 0)
             {
-                foreach (PlayerBody body in Bot)
+                foreach (PlayerBody bot in Bot)
                 {
-                    Hide(body, KeyBotSkinHide.Value);
+                    Hide(bot, KeyBotSkinHide.Value);
                 }
             }
         }
