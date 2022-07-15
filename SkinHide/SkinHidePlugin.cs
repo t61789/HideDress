@@ -71,7 +71,7 @@ namespace SkinHide
             {
                 foreach (PlayerBody body in Bot)
                 {
-                    Hide(body, KeyPlayerSkinHide.Value);
+                    Hide(body, KeyBotSkinHide.Value);
                 }
             }
         }
