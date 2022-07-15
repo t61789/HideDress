@@ -19,8 +19,18 @@ namespace SkinHide
 
         public static List <PlayerBody> Bot = new List<PlayerBody>();
 
+        public enum Part
+        {
+            All,
+            Dress,
+            SkinDress
+        }
+
         public static ConfigEntry<bool> KeyPlayerSkinHide { get; set; }
         public static ConfigEntry<bool> KeyBotSkinHide { get; set; }
+
+        public static ConfigEntry<Part> KeyPlayerSkinHidePart { get; set; }
+        public static ConfigEntry<Part> KeyBotSkinHidePart { get; set; }
 
         public static ConfigEntry<KeyboardShortcut> KBSPlayerSkinHide { get; set; }
         public static ConfigEntry<KeyboardShortcut> KBSBotSkinHide { get; set; }
@@ -30,10 +40,14 @@ namespace SkinHide
             Logger.LogInfo("Loaded: kmyuhkyuk-SkinHide");
 
             string SkinHide = "Skin Hide";
-            string KBS = "Keyboard Shortcut";
+            string SkinHidePart = "隐藏部分 Skin Hide Part";
+            string KBS = "快捷键 Keyboard Shortcut";
 
             KeyPlayerSkinHide = Config.Bind<bool>(SkinHide, "玩家服装隐藏 Player Skin Hide", false);
             KeyBotSkinHide = Config.Bind<bool>(SkinHide, "Bot服装隐藏 Bot Skin Hide", false);
+
+            KeyPlayerSkinHidePart = Config.Bind<Part>(SkinHidePart, "Player", Part.All);
+            KeyBotSkinHidePart = Config.Bind<Part>(SkinHidePart, "Bot", Part.All);
 
             KBSPlayerSkinHide = Config.Bind<KeyboardShortcut>(KBS, "玩家服装隐藏快捷键 Player Skin Hide", new KeyboardShortcut());
             KBSBotSkinHide = Config.Bind<KeyboardShortcut>(KBS, "Bot服装隐藏快捷键 Bot Skin Hide", new KeyboardShortcut());
@@ -56,13 +70,13 @@ namespace SkinHide
             //PlayerModelView Skin Hide
             if (PlayerModelView != null)
             {
-                Hide(PlayerModelView, KeyPlayerSkinHide.Value);
+                Hide(PlayerModelView, KeyPlayerSkinHide.Value, KeyPlayerSkinHidePart.Value);
             }
 
             //Player Skin Hide
             if (Player != null)
             {
-                Hide(Player, KeyPlayerSkinHide.Value);
+                Hide(Player, KeyPlayerSkinHide.Value, KeyPlayerSkinHidePart.Value);
             }
 
             //Bot Skin Hide
@@ -71,12 +85,12 @@ namespace SkinHide
             {
                 foreach (PlayerBody bot in Bot)
                 {
-                    Hide(bot, KeyBotSkinHide.Value);
+                    Hide(bot, KeyBotSkinHide.Value, KeyBotSkinHidePart.Value);
                 }
             }
         }
 
-        void Hide(PlayerBody playerbody, bool hide)
+        void Hide(PlayerBody playerbody, bool hide, Part part)
         {
             object slotviews = playerbody.SlotViews;
 
@@ -90,14 +104,31 @@ namespace SkinHide
 
             GameObject[] skindress = dresses.Where(x => x.GetType() == typeof(SkinDress) || x.GetType() == typeof(ArmBandView)).Select(x => x.gameObject).ToArray();
 
-            foreach (GameObject gameobject in skindress)
+            switch (part)
             {
-                gameobject.SetActive(!hide);
-            }
+                case Part.All:
+                    foreach (GameObject gameobject in skindress)
+                    {
+                        gameobject.SetActive(!hide);
+                    }
 
-            foreach (MeshRenderer renderer in renderers)
-            {
-                renderer.enabled = !hide;
+                    foreach (MeshRenderer renderer in renderers)
+                    {
+                        renderer.enabled = !hide;
+                    }
+                    break;
+                case Part.Dress:
+                    foreach (MeshRenderer renderer in renderers)
+                    {
+                        renderer.enabled = !hide;
+                    }
+                    break;
+                case Part.SkinDress:
+                    foreach (GameObject gameobject in skindress)
+                    {
+                        gameobject.SetActive(!hide);
+                    }
+                    break;
             }
         }
     }
