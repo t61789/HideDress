@@ -1,5 +1,8 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
+using HarmonyLib;
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using EFT;
@@ -8,44 +11,33 @@ using SkinHide.Patches;
 
 namespace SkinHide
 {
-    [BepInPlugin("com.kmyuhkyuk.SkinHide", "kmyuhkyuk-SkinHide", "1.1.0")]
+    [BepInPlugin("com.kmyuhkyuk.SkinHide", "kmyuhkyuk-SkinHide", "1.2.0")]
     public class SkinHidePlugin : BaseUnityPlugin
     {
-        public static GameObject Player;
+        public static PlayerBody Player;
 
-        public static GameObject PlayerModelView;
+        public static PlayerBody PlayerModelView;
 
-        public SkinDress[] PlayerMVSkinDress;
-
-        public Dress[] PlayerMVDress;
-
-        public SkinDress[] PlayerSkinDress;
-
-        public Dress[] PlayerDress;
-
-        public HashSet<GameObject> PlayerSkinGameObject = new HashSet<GameObject>();
-
-        public HashSet<GameObject> PlayerDressGameObject = new HashSet<GameObject>();
-
-        public static List <GameObject> Bot = new List<GameObject>();
-
-        public HashSet<GameObject> BotSkinGameObject = new HashSet<GameObject>();
-
-        public HashSet<GameObject> BotDressGameObject = new HashSet<GameObject>();
+        public static List <PlayerBody> Bot = new List<PlayerBody>();
 
         public static ConfigEntry<bool> KeyPlayerSkinHide { get; set; }
         public static ConfigEntry<bool> KeyBotSkinHide { get; set; }
 
-        public static ConfigEntry<bool> KeyBotSkinHideShutDown { get; set; }
+        public static ConfigEntry<KeyboardShortcut> KBSPlayerSkinHide { get; set; }
+        public static ConfigEntry<KeyboardShortcut> KBSBotSkinHide { get; set; }
 
         private void Start()
         {
             Logger.LogInfo("Loaded: kmyuhkyuk-SkinHide");
 
             string SkinHide = "Skin Hide";
+            string KBS = "Keyboard Shortcut";
+
             KeyPlayerSkinHide = Config.Bind<bool>(SkinHide, "玩家服装隐藏 Player Skin Hide", false);
             KeyBotSkinHide = Config.Bind<bool>(SkinHide, "Bot服装隐藏 Bot Skin Hide", false);
-            KeyBotSkinHideShutDown = Config.Bind<bool>(SkinHide, "Bot服装隐藏功能关闭 Bot Skin Hide Function Shut Down", false, "Many Bot corpse will cause lag, turn the switch off Bot Skin Scan.");
+
+            KBSPlayerSkinHide = Config.Bind<KeyboardShortcut>(KBS, "玩家服装隐藏快捷键 Player Skin Hide", new KeyboardShortcut());
+            KBSBotSkinHide = Config.Bind<KeyboardShortcut>(KBS, "Bot服装隐藏快捷键 Bot Skin Hide", new KeyboardShortcut());
 
             new PlayerModelViewPatch().Enable();
             new GamePlayerOwnerPatch().Enable();
@@ -53,207 +45,59 @@ namespace SkinHide
         }
         void Update()
         {
-            //PlayerModelView Skin Hide
-            if (PlayerModelView != null && KeyPlayerSkinHide.Value)
+            if (KBSPlayerSkinHide.Value.IsDown())
             {
-                //Get PlayerModelView all SkinDress and Dress
-                PlayerMVSkinDress = PlayerModelView.GetComponentsInChildren<SkinDress>();
-                PlayerMVDress = PlayerModelView.GetComponentsInChildren<Dress>();
-
-                //False SkinDress and Dress GameObject
-                if (PlayerMVSkinDress != null)
-                {
-                    foreach (SkinDress skindress in PlayerMVSkinDress)
-                    {
-                        skindress.gameObject.SetActive(false);
-                    }
-                }
-                if (PlayerMVDress != null)
-                {
-                    foreach (Dress dress in PlayerMVDress)
-                    {
-                        dress.gameObject.SetActive(false);
-                    }
-                }
+                KeyPlayerSkinHide.Value = !KeyPlayerSkinHide.Value;
             }
+            if (KBSBotSkinHide.Value.IsDown())
+            {
+                KeyBotSkinHide.Value = !KeyBotSkinHide.Value;
+            }
+
+            //PlayerModelView Skin Hide
+            if (PlayerModelView != null)
+            {
+                Hide(PlayerModelView, KeyPlayerSkinHide.Value);
+            }
+
             //Player Skin Hide
             if (Player != null)
             {
-                //Get Player all SkinDress and Dress
-                PlayerSkinDress = Player.transform.Find("Player/Mesh").gameObject.GetComponentsInChildren<SkinDress>();
-                PlayerDress = Player.transform.Find("Player/Root_Joint").gameObject.GetComponentsInChildren<Dress>();
-
-                //False SkinDress GameObject
-                if (PlayerSkinDress != null)
-                {
-                    foreach (SkinDress skindress in PlayerSkinDress)
-                    {
-                        PlayerSkinGameObject.Add(skindress.gameObject);
-                    }
-                }
-                if (PlayerDress != null)
-                {
-                    foreach (Dress dress in PlayerDress)
-                    {
-                        PlayerDressGameObject.Add(dress.gameObject);
-                    }   
-                }
-
-                //Hide Dress GameObject
-                if (PlayerDressGameObject != null)
-                {
-                    List<GameObject> Loot = new List<GameObject>();
-
-                    foreach (GameObject dress in PlayerDressGameObject)
-                    {
-                        MeshRenderer[] MeshRenderer = dress.GetComponentsInChildren<MeshRenderer>();
-
-                        //Loot False Hide
-                        if (dress != null && dress.GetComponentInParent<GamePlayerOwner>() != null)
-                        {
-                            foreach (MeshRenderer mesh in MeshRenderer)
-                            {
-                                mesh.enabled = !KeyPlayerSkinHide.Value;
-                            }
-                        }
-                        else
-                        {
-                            foreach (MeshRenderer mesh in MeshRenderer)
-                            {
-                                mesh.enabled = true; 
-                            }
-                            Loot.Add(dress);
-                        }
-                    }
-
-                    //Loot from List Remove 
-                    if (Loot != null)
-                    {
-                        PlayerDressGameObject.ExceptWith(Loot);
-                    }
-                }
-
-                //False or true SkinDress and Dress GameObject
-                if (PlayerSkinGameObject != null)
-                {
-                    List<GameObject> Loot = new List<GameObject>();
-
-                    foreach (GameObject skin in PlayerSkinGameObject)
-                    {
-                        if (skin != null && skin.GetComponentInParent<GamePlayerOwner>() != null)
-                        {
-                            skin.SetActive(!KeyPlayerSkinHide.Value);
-                        }
-                        else
-                        {
-                            skin.SetActive(true);
-
-                            Loot.Add(skin);
-                        }
-                    }
-
-                    //Loot from List Remove 
-                    if (Loot != null)
-                    {
-                        PlayerSkinGameObject.ExceptWith(Loot);
-                    }
-                }
-            }
-            else
-            {
-                //Quit Raid Clear GameObject List
-                PlayerSkinGameObject.Clear();
-                PlayerDressGameObject.Clear();
+                Hide(Player, KeyPlayerSkinHide.Value);
             }
 
-            //Clear List null Bot
-            Bot.RemoveAll(x => x == null);
             //Bot Skin Hide
-            if (Bot != null && !KeyBotSkinHideShutDown.Value)
+            if (Bot.Count > 0)
             {
-                //Get Bot all SkinDress and Dress
-                foreach (GameObject bot in Bot)
+                foreach (PlayerBody body in Bot)
                 {
-                    SkinDress[] botskindress = bot.transform.Find("Player/Mesh").gameObject.GetComponentsInChildren<SkinDress>();
-
-                    foreach (SkinDress skinDress in botskindress)
-                    {
-                        BotSkinGameObject.Add(skinDress.gameObject);
-                    }
-
-                    Dress[] botDress = bot.transform.Find("Player/Root_Joint").gameObject.GetComponentsInChildren<Dress>();
-
-                    foreach (Dress Dress in botDress)
-                    {
-                        BotDressGameObject.Add(Dress.gameObject);
-                    }
-                }
-
-                //Hide Dress GameObject
-                if (BotDressGameObject != null)
-                {
-                    List<GameObject> Loot = new List<GameObject>();
-
-                    foreach (GameObject botdress in BotDressGameObject)
-                    {
-                        MeshRenderer[] MeshRenderer = botdress.GetComponentsInChildren<MeshRenderer>();
-
-                        //Loot False Hide
-                        if (botdress.GetComponentInParent<BotOwner>() != null)
-                        {
-                            foreach (MeshRenderer botmesh in MeshRenderer)
-                            {
-                                botmesh.enabled = !KeyBotSkinHide.Value;
-                            }
-                        }
-                        else
-                        {
-                            foreach (MeshRenderer botmesh in MeshRenderer)
-                            {
-                                botmesh.enabled = true;  
-                            }
-                            Loot.Add(botdress);
-                        }
-                    }
-
-                    //Loot from List Remove 
-                    if (Loot != null)
-                    {
-                        BotDressGameObject.ExceptWith(Loot);
-                    }
-                }
-
-                //False or true SkinDress GameObject
-                if (BotSkinGameObject != null)
-                {
-                    List<GameObject> Loot = new List<GameObject>();
-
-                    foreach (GameObject botskin in BotSkinGameObject)
-                    {
-                        if (botskin.GetComponentInParent<BotOwner>() != null)
-                        {
-                            botskin.SetActive(!KeyBotSkinHide.Value);
-                        }
-                        else
-                        {
-                            botskin.SetActive(true);
-
-                            Loot.Add(botskin);
-                        }
-                    }
-
-                    //Loot from List Remove 
-                    if (Loot != null)
-                    {
-                        BotSkinGameObject.ExceptWith(Loot);
-                    }
+                    Hide(body, KeyPlayerSkinHide.Value);
                 }
             }
-            else
+        }
+
+        void Hide(PlayerBody playerbody, bool hide)
+        {
+            object slotviews = playerbody.SlotViews;
+
+            IEnumerable<object> slotlist = (IEnumerable<object>)Traverse.Create(slotviews).Field("list_0").GetValue<object>();
+
+            Dress[] dresses = slotlist.Where(x => Traverse.Create(x).Field("Dresses").GetValue<Dress[]>() != null).SelectMany(x => Traverse.Create(x).Field("Dresses").GetValue<Dress[]>()).ToArray();
+
+            GameObject[] dress = dresses.Where(x => x.GetType() == typeof(Dress)).Select(x => x.gameObject).ToArray();
+
+            MeshRenderer[] renderers = dress.SelectMany(x => x.GetComponentsInChildren<MeshRenderer>()).ToArray();
+
+            GameObject[] skindress = dresses.Where(x => x.GetType() == typeof(SkinDress) || x.GetType() == typeof(ArmBandView)).Select(x => x.gameObject).ToArray();
+
+            foreach (GameObject gameobject in skindress)
             {
-                //Quit Raid Clear GameObject List
-                BotSkinGameObject.Clear();
-                BotDressGameObject.Clear();
+                gameobject.SetActive(!hide);
+            }
+
+            foreach (MeshRenderer renderer in renderers)
+            {
+                renderer.enabled = !hide;
             }
         }
     }

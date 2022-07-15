@@ -15,7 +15,7 @@ namespace SkinHide.Patches
         [PatchPostfix]
         private static void PatchPostfix(GamePlayerOwner __instance)
         {
-            SkinHidePlugin.Player = __instance.gameObject;
+            SkinHidePlugin.Player = __instance.gameObject.GetComponentInChildren<PlayerBody>();
         }
     }
 }

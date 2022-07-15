@@ -2,6 +2,7 @@
 using Aki.Reflection.Utils;
 using System.Reflection;
 using System.Threading.Tasks;
+using EFT;
 using EFT.UI;
 
 namespace SkinHide.Patches
@@ -18,7 +19,7 @@ namespace SkinHide.Patches
         {
             await __result;
 
-            SkinHidePlugin.PlayerModelView = __instance.gameObject;            
+            SkinHidePlugin.PlayerModelView = __instance.gameObject.GetComponentInChildren<PlayerBody>();            
         }
     }
 }
