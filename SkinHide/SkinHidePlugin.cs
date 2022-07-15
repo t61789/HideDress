@@ -66,6 +66,7 @@ namespace SkinHide
             }
 
             //Bot Skin Hide
+            Bot.RemoveAll(x => x == null);
             if (Bot.Count > 0)
             {
                 foreach (PlayerBody bot in Bot)
