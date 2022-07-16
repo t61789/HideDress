@@ -56,6 +56,7 @@ namespace SkinHide
             new GamePlayerOwnerPatch().Enable();
             new BotOwnerPatch().Enable();
         }
+
         void Update()
         {
             if (KBSPlayerSkinHide.Value.IsDown())
