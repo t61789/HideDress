@@ -10,7 +10,7 @@ using SkinHide.Patches;
 
 namespace SkinHide
 {
-    [BepInPlugin("com.kmyuhkyuk.SkinHide", "kmyuhkyuk-SkinHide", "1.2.0")]
+    [BepInPlugin("com.kmyuhkyuk.SkinHide", "kmyuhkyuk-SkinHide", "1.2.1")]
     public class SkinHidePlugin : BaseUnityPlugin
     {
         public static PlayerBody Player;
@@ -93,7 +93,7 @@ namespace SkinHide
 
         void Hide(PlayerBody playerbody, bool hide, Part part)
         {
-            object slotviews = playerbody.SlotViews;
+            object slotviews = Traverse.Create(playerbody).Field("SlotViews").GetValue<object>();
 
             IEnumerable<object> slotlist = (IEnumerable<object>)Traverse.Create(slotviews).Field("list_0").GetValue<object>();
 
