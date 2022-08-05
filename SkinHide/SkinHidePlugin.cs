@@ -10,7 +10,7 @@ using SkinHide.Patches;
 
 namespace SkinHide
 {
-    [BepInPlugin("com.kmyuhkyuk.SkinHide", "kmyuhkyuk-SkinHide", "1.2.1")]
+    [BepInPlugin("com.kmyuhkyuk.SkinHide", "kmyuhkyuk-SkinHide", "1.2.2")]
     public class SkinHidePlugin : BaseUnityPlugin
     {
         public static PlayerBody Player;
@@ -39,18 +39,18 @@ namespace SkinHide
         {
             Logger.LogInfo("Loaded: kmyuhkyuk-SkinHide");
 
-            string SkinHide = "Skin Hide";
-            string SkinHidePart = "隐藏部分 Skin Hide Part";
-            string KBS = "快捷键 Keyboard Shortcut";
+            string SkinHideSettings = "Skin Hide Settings";
+            string SkinHidePartSettings = "隐藏部分设置 Skin Hide Part Settings";
+            string KBSSettings = "快捷键设置 Keyboard Shortcut Settings";
 
-            KeyPlayerSkinHide = Config.Bind<bool>(SkinHide, "玩家服装隐藏 Player Skin Hide", false);
-            KeyBotSkinHide = Config.Bind<bool>(SkinHide, "Bot服装隐藏 Bot Skin Hide", false);
+            KeyPlayerSkinHide = Config.Bind<bool>(SkinHideSettings, "玩家服装隐藏 Player Skin Hide", false);
+            KeyBotSkinHide = Config.Bind<bool>(SkinHideSettings, "Bot服装隐藏 Bot Skin Hide", false);
 
-            KeyPlayerSkinHidePart = Config.Bind<Part>(SkinHidePart, "Player", Part.All);
-            KeyBotSkinHidePart = Config.Bind<Part>(SkinHidePart, "Bot", Part.All);
+            KeyPlayerSkinHidePart = Config.Bind<Part>(SkinHidePartSettings, "Player", Part.All);
+            KeyBotSkinHidePart = Config.Bind<Part>(SkinHidePartSettings, "Bot", Part.All);
 
-            KBSPlayerSkinHide = Config.Bind<KeyboardShortcut>(KBS, "玩家服装隐藏快捷键 Player Skin Hide", new KeyboardShortcut());
-            KBSBotSkinHide = Config.Bind<KeyboardShortcut>(KBS, "Bot服装隐藏快捷键 Bot Skin Hide", new KeyboardShortcut());
+            KBSPlayerSkinHide = Config.Bind<KeyboardShortcut>(KBSSettings, "玩家服装隐藏快捷键 Player Skin Hide", KeyboardShortcut.Empty);
+            KBSBotSkinHide = Config.Bind<KeyboardShortcut>(KBSSettings, "Bot服装隐藏快捷键 Bot Skin Hide", KeyboardShortcut.Empty);
 
             new PlayerModelViewPatch().Enable();
             new GamePlayerOwnerPatch().Enable();
