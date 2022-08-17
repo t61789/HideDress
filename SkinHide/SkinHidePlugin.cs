@@ -54,7 +54,6 @@ namespace SkinHide
 
             new PlayerModelViewPatch().Enable();
             new PlayerPatch().Enable();
-            new BotOwnerPatch().Enable();
         }
 
         void Update()
