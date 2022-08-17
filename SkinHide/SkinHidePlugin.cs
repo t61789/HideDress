@@ -10,7 +10,7 @@ using SkinHide.Patches;
 
 namespace SkinHide
 {
-    [BepInPlugin("com.kmyuhkyuk.SkinHide", "kmyuhkyuk-SkinHide", "1.2.2")]
+    [BepInPlugin("com.kmyuhkyuk.SkinHide", "kmyuhkyuk-SkinHide", "1.2.3")]
     public class SkinHidePlugin : BaseUnityPlugin
     {
         public static PlayerBody Player;
