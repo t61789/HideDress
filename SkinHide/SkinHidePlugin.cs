@@ -53,7 +53,7 @@ namespace SkinHide
             KBSBotSkinHide = Config.Bind<KeyboardShortcut>(KBSSettings, "Bot服装隐藏快捷键 Bot Skin Hide", KeyboardShortcut.Empty);
 
             new PlayerModelViewPatch().Enable();
-            new GamePlayerOwnerPatch().Enable();
+            new PlayerPatch().Enable();
             new BotOwnerPatch().Enable();
         }
 
@@ -71,13 +71,13 @@ namespace SkinHide
             //PlayerModelView Skin Hide
             if (PlayerModelView != null)
             {
-                Hide(PlayerModelView, KeyPlayerSkinHide.Value, KeyPlayerSkinHidePart.Value);
+                Hide(PlayerModelView, KeyPlayerSkinHidePart.Value, KeyPlayerSkinHide.Value);
             }
 
             //Player Skin Hide
             if (Player != null)
             {
-                Hide(Player, KeyPlayerSkinHide.Value, KeyPlayerSkinHidePart.Value);
+                Hide(Player, KeyPlayerSkinHidePart.Value, KeyPlayerSkinHide.Value);
             }
 
             //Bot Skin Hide
@@ -86,12 +86,12 @@ namespace SkinHide
             {
                 foreach (PlayerBody bot in Bot)
                 {
-                    Hide(bot, KeyBotSkinHide.Value, KeyBotSkinHidePart.Value);
+                    Hide(bot, KeyBotSkinHidePart.Value, KeyBotSkinHide.Value);
                 }
             }
         }
 
-        void Hide(PlayerBody playerbody, bool hide, Part part)
+        void Hide(PlayerBody playerbody, Part part, bool hide)
         {
             object slotviews = Traverse.Create(playerbody).Field("SlotViews").GetValue<object>();
 

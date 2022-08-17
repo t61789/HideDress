@@ -75,7 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Patches\BotOwnerPatch.cs" />
-    <Compile Include="Patches\GamePlayerOwnerPatch.cs" />
+    <Compile Include="Patches\PlayerPatch.cs" />
     <Compile Include="Patches\PlayerModelViewPatch.cs" />
     <Compile Include="SkinHidePlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
