@@ -26,14 +26,14 @@ namespace SkinHide
             SkinDress
         }
 
-        public static ConfigEntry<bool> KeyPlayerSkinHide { get; set; }
-        public static ConfigEntry<bool> KeyBotSkinHide { get; set; }
+        public static ConfigEntry<bool> KeyPlayerSkinHide;
+        public static ConfigEntry<bool> KeyBotSkinHide;
 
-        public static ConfigEntry<Part> KeyPlayerSkinHidePart { get; set; }
-        public static ConfigEntry<Part> KeyBotSkinHidePart { get; set; }
+        public static ConfigEntry<Part> KeyPlayerSkinHidePart;
+        public static ConfigEntry<Part> KeyBotSkinHidePart;
 
-        public static ConfigEntry<KeyboardShortcut> KBSPlayerSkinHide { get; set; }
-        public static ConfigEntry<KeyboardShortcut> KBSBotSkinHide { get; set; }
+        public static ConfigEntry<KeyboardShortcut> KBSPlayerSkinHide;
+        public static ConfigEntry<KeyboardShortcut> KBSBotSkinHide;
 
         private void Start()
         {
@@ -78,9 +78,12 @@ namespace SkinHide
             {
                 Hide(Player, KeyPlayerSkinHidePart.Value, KeyPlayerSkinHide.Value);
             }
+            else
+            {
+                Bot.Clear();
+            }
 
             //Bot Skin Hide
-            Bot.RemoveAll(x => x == null);
             if (Bot.Count > 0)
             {
                 foreach (PlayerBody bot in Bot)
