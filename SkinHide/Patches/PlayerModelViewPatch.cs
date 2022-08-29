@@ -19,7 +19,7 @@ namespace SkinHide.Patches
         {
             await __result;
 
-            SkinHidePlugin.PlayerModelView = __instance.gameObject.GetComponentInChildren<PlayerBody>();            
+            SkinHidePlugin.PlayerModelView = __instance.GetComponentInChildren<PlayerBody>();            
         }
     }
 }

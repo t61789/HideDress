@@ -20,11 +20,11 @@ namespace SkinHide.Patches
 
             if (__instance.IsYourPlayer)
             {
-                SkinHidePlugin.Player = __instance.gameObject.GetComponentInChildren<PlayerBody>();
+                SkinHidePlugin.Player = __instance.GetComponentInChildren<PlayerBody>();
             }
             else
             {
-                SkinHidePlugin.Bot.Add(__instance.gameObject.GetComponentInChildren<PlayerBody>());
+                SkinHidePlugin.Bot.Add(__instance.GetComponentInChildren<PlayerBody>());
             }
         }
     }
