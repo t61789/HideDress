@@ -10,7 +10,7 @@ using SkinHide.Patches;
 
 namespace SkinHide
 {
-    [BepInPlugin("com.kmyuhkyuk.SkinHide", "kmyuhkyuk-SkinHide", "1.2.3")]
+    [BepInPlugin("com.kmyuhkyuk.SkinHide", "kmyuhkyuk-SkinHide", "1.2.4")]
     public class SkinHidePlugin : BaseUnityPlugin
     {
         public static PlayerBody Player;
@@ -19,21 +19,14 @@ namespace SkinHide
 
         public static List <PlayerBody> Bot = new List<PlayerBody>();
 
+        private SettingsData settingsdata = new SettingsData();
+
         public enum Part
         {
             All,
             Dress,
             SkinDress
         }
-
-        public static ConfigEntry<bool> KeyPlayerSkinHide;
-        public static ConfigEntry<bool> KeyBotSkinHide;
-
-        public static ConfigEntry<Part> KeyPlayerSkinHidePart;
-        public static ConfigEntry<Part> KeyBotSkinHidePart;
-
-        public static ConfigEntry<KeyboardShortcut> KBSPlayerSkinHide;
-        public static ConfigEntry<KeyboardShortcut> KBSBotSkinHide;
 
         private void Start()
         {
@@ -43,14 +36,14 @@ namespace SkinHide
             string SkinHidePartSettings = "隐藏部分设置 Skin Hide Part Settings";
             string KBSSettings = "快捷键设置 Keyboard Shortcut Settings";
 
-            KeyPlayerSkinHide = Config.Bind<bool>(SkinHideSettings, "玩家服装隐藏 Player Skin Hide", false);
-            KeyBotSkinHide = Config.Bind<bool>(SkinHideSettings, "Bot服装隐藏 Bot Skin Hide", false);
+            settingsdata.KeyPlayerSkinHide = Config.Bind<bool>(SkinHideSettings, "玩家服装隐藏 Player Skin Hide", false);
+            settingsdata.KeyBotSkinHide = Config.Bind<bool>(SkinHideSettings, "Bot服装隐藏 Bot Skin Hide", false);
 
-            KeyPlayerSkinHidePart = Config.Bind<Part>(SkinHidePartSettings, "Player", Part.All);
-            KeyBotSkinHidePart = Config.Bind<Part>(SkinHidePartSettings, "Bot", Part.All);
+            settingsdata.KeyPlayerSkinHidePart = Config.Bind<Part>(SkinHidePartSettings, "Player", Part.All);
+            settingsdata.KeyBotSkinHidePart = Config.Bind<Part>(SkinHidePartSettings, "Bot", Part.All);
 
-            KBSPlayerSkinHide = Config.Bind<KeyboardShortcut>(KBSSettings, "玩家服装隐藏快捷键 Player Skin Hide", KeyboardShortcut.Empty);
-            KBSBotSkinHide = Config.Bind<KeyboardShortcut>(KBSSettings, "Bot服装隐藏快捷键 Bot Skin Hide", KeyboardShortcut.Empty);
+            settingsdata.KBSPlayerSkinHide = Config.Bind<KeyboardShortcut>(KBSSettings, "玩家服装隐藏快捷键 Player Skin Hide", KeyboardShortcut.Empty);
+            settingsdata.KBSBotSkinHide = Config.Bind<KeyboardShortcut>(KBSSettings, "Bot服装隐藏快捷键 Bot Skin Hide", KeyboardShortcut.Empty);
 
             new PlayerModelViewPatch().Enable();
             new PlayerPatch().Enable();
@@ -58,25 +51,25 @@ namespace SkinHide
 
         void Update()
         {
-            if (KBSPlayerSkinHide.Value.IsDown())
+            if (settingsdata.KBSPlayerSkinHide.Value.IsDown())
             {
-                KeyPlayerSkinHide.Value = !KeyPlayerSkinHide.Value;
+                settingsdata.KeyPlayerSkinHide.Value = !settingsdata.KeyPlayerSkinHide.Value;
             }
-            if (KBSBotSkinHide.Value.IsDown())
+            if (settingsdata.KBSBotSkinHide.Value.IsDown())
             {
-                KeyBotSkinHide.Value = !KeyBotSkinHide.Value;
+                settingsdata.KeyBotSkinHide.Value = !settingsdata.KeyBotSkinHide.Value;
             }
 
             //PlayerModelView Skin Hide
             if (PlayerModelView != null)
             {
-                Hide(PlayerModelView, KeyPlayerSkinHidePart.Value, KeyPlayerSkinHide.Value);
+                Hide(PlayerModelView, settingsdata.KeyPlayerSkinHidePart.Value, settingsdata.KeyPlayerSkinHide.Value);
             }
 
             //Player Skin Hide
             if (Player != null)
             {
-                Hide(Player, KeyPlayerSkinHidePart.Value, KeyPlayerSkinHide.Value);
+                Hide(Player, settingsdata.KeyPlayerSkinHidePart.Value, settingsdata.KeyPlayerSkinHide.Value);
             }
             else
             {
@@ -88,7 +81,7 @@ namespace SkinHide
             {
                 foreach (PlayerBody bot in Bot)
                 {
-                    Hide(bot, KeyBotSkinHidePart.Value, KeyBotSkinHide.Value);
+                    Hide(bot, settingsdata.KeyBotSkinHidePart.Value, settingsdata.KeyBotSkinHide.Value);
                 }
             }
         }
@@ -133,6 +126,18 @@ namespace SkinHide
                     }
                     break;
             }
+        }
+
+        public class SettingsData
+        {
+            public ConfigEntry<bool> KeyPlayerSkinHide;
+            public ConfigEntry<bool> KeyBotSkinHide;
+
+            public ConfigEntry<Part> KeyPlayerSkinHidePart;
+            public ConfigEntry<Part> KeyBotSkinHidePart;
+
+            public ConfigEntry<KeyboardShortcut> KBSPlayerSkinHide;
+            public ConfigEntry<KeyboardShortcut> KBSBotSkinHide;
         }
     }
 }
