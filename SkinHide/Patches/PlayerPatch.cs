@@ -34,7 +34,7 @@ namespace SkinHide.Patches
             }
             else
             {
-                isyouplayer = Singleton<GameWorld>.Instance.AllPlayers[0] == __instance;
+                isyouplayer = __instance == Singleton<GameWorld>.Instance.AllPlayers[0];
             }
 
             if (isyouplayer)
