@@ -45,7 +45,6 @@ namespace SkinHide.Utils
             var ilGen = dmd.GetILGenerator();
 
             Type[] parameterTypes;
-
             int num;
 
             if (!method.IsStatic)
@@ -89,7 +88,6 @@ namespace SkinHide.Utils
                     ilGen.Emit(OpCodes.Castclass, parameterTypes[i]);
                 }
             }
-
 
             if (method.IsStatic || !virtualCall)
             {
