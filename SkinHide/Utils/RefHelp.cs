@@ -20,20 +20,42 @@ namespace SkinHide.Utils
 
             var declaringType = method.DeclaringType;
 
-            var DelegateParameters = delegateType.GetMethod("Invoke").GetParameters();
+            var DelegateMethod = delegateType.GetMethod("Invoke");
+            var DelegateParameters = DelegateMethod.GetParameters();
             var DelegateparameterTypes = DelegateParameters.Select(x => x.ParameterType).ToArray();
 
-            var dmd = new DynamicMethod("OpenInstanceDelegate_" + method.Name, method.ReturnType, DelegateparameterTypes);
+            Type ReturnType;
+            bool NeedBox;
+
+            if (DelegateMethod.ReturnType == typeof(object) && method.ReturnType.IsValueType)
+            {
+                ReturnType = typeof(object);
+
+                NeedBox = true;
+            }
+            else
+            {
+                ReturnType = method.ReturnType;
+
+                NeedBox = false;
+            }
+
+            var dmd = new DynamicMethod("OpenInstanceDelegate_" + method.Name, ReturnType, DelegateparameterTypes);
 
             var ilGen = dmd.GetILGenerator();
+
+            Type[] parameterTypes;
+
+            int num;
 
             if (!method.IsStatic)
             {
                 var parameters = method.GetParameters();
                 var numParameters = parameters.Length;
-                var parameterTypes = new Type[numParameters + 1];
+                parameterTypes = new Type[numParameters + 1];
                 parameterTypes[0] = typeof(object);
-                for (var i = 0; i < numParameters; i++)
+
+                for (int i = 0; i < numParameters; i++)
                 {
                     parameterTypes[i + 1] = parameters[i].ParameterType;
                 }
@@ -49,19 +71,21 @@ namespace SkinHide.Utils
 
                 ilGen.Emit(OpCodes.Castclass, declaringType);
 
-                for (var i = 1; i < parameterTypes.Length; i++)
-                {
-                    ilGen.Emit(OpCodes.Ldarg, i);
-                    ilGen.Emit(OpCodes.Castclass, parameterTypes[i]);
-                }
+                num = 1;
             }
             else
             {
-                var parameterTypes = method.GetParameters().Select(x => x.ParameterType).ToArray();
+                parameterTypes = method.GetParameters().Select(x => x.ParameterType).ToArray();
 
-                for (var i = 0; i < parameterTypes.Length; i++)
+                num = 0;
+            }
+
+            for (int i = num; i < parameterTypes.Length; i++)
+            {
+                ilGen.Emit(OpCodes.Ldarg, i);
+
+                if (!parameterTypes[i].IsValueType)
                 {
-                    ilGen.Emit(OpCodes.Ldarg, i);
                     ilGen.Emit(OpCodes.Castclass, parameterTypes[i]);
                 }
             }
@@ -74,6 +98,11 @@ namespace SkinHide.Utils
             else
             {
                 ilGen.Emit(OpCodes.Callvirt, method);
+            }
+
+            if (NeedBox)
+            {
+                ilGen.Emit(OpCodes.Box, method.ReturnType);
             }
 
             ilGen.Emit(OpCodes.Ret);
