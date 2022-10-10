@@ -1,25 +1,27 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
-using HarmonyLib;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using EFT;
 using EFT.Visual;
 using SkinHide.Patches;
+using SkinHide.Utils;
 
 namespace SkinHide
 {
-    [BepInPlugin("com.kmyuhkyuk.SkinHide", "kmyuhkyuk-SkinHide", "1.2.4")]
+    [BepInPlugin("com.kmyuhkyuk.SkinHide", "kmyuhkyuk-SkinHide", "1.2.5")]
     public class SkinHidePlugin : BaseUnityPlugin
     {
-        public static PlayerBody Player;
+        internal static PlayerBody Player;
 
-        public static PlayerBody PlayerModelView;
+        internal static PlayerBody PlayerModelView;
 
-        public static List <PlayerBody> Bot = new List<PlayerBody>();
+        internal static List<PlayerBody> Bot = new List<PlayerBody>();
 
         private SettingsData settingsdata = new SettingsData();
+
+        private ReflectionData reflectiondata = new ReflectionData();
 
         public enum Part
         {
@@ -47,6 +49,10 @@ namespace SkinHide
 
             new PlayerModelViewPatch().Enable();
             new PlayerPatch().Enable();
+
+            reflectiondata.RefSlotViews = RefHelp.FieldRef<PlayerBody, object>.Create("SlotViews");
+            reflectiondata.RefSlotList = RefHelp.FieldRef<object, IEnumerable<object>>.Create(reflectiondata.RefSlotViews.FieldType, "list_0");
+            reflectiondata.RefDresses = RefHelp.FieldRef<object, Dress[]>.Create(reflectiondata.RefSlotList.FieldType.GetGenericArguments()[0], "Dresses");
         }
 
         void Update()
@@ -88,11 +94,11 @@ namespace SkinHide
 
         void Hide(PlayerBody playerbody, Part part, bool hide)
         {
-            object slotviews = Traverse.Create(playerbody).Field("SlotViews").GetValue<object>();
+            object slotviews = reflectiondata.RefSlotViews.GetValue(playerbody);
 
-            IEnumerable<object> slotlist = (IEnumerable<object>)Traverse.Create(slotviews).Field("list_0").GetValue<object>();
+            IEnumerable<object> slotlist = reflectiondata.RefSlotList.GetValue(slotviews);
 
-            Dress[] dresses = slotlist.Where(x => Traverse.Create(x).Field("Dresses").GetValue<Dress[]>() != null).SelectMany(x => Traverse.Create(x).Field("Dresses").GetValue<Dress[]>()).ToArray();
+            Dress[] dresses = slotlist.Where(x => reflectiondata.RefDresses.GetValue(x) != null).SelectMany(x => reflectiondata.RefDresses.GetValue(x)).ToArray();
 
             GameObject[] dress = dresses.Where(x => x.GetType() == typeof(Dress)).Select(x => x.gameObject).ToArray();
 
@@ -138,6 +144,13 @@ namespace SkinHide
 
             public ConfigEntry<KeyboardShortcut> KBSPlayerSkinHide;
             public ConfigEntry<KeyboardShortcut> KBSBotSkinHide;
+        }
+
+        public class ReflectionData
+        {
+            public RefHelp.FieldRef<PlayerBody, object> RefSlotViews;
+            public RefHelp.FieldRef<object, IEnumerable<object>> RefSlotList;
+            public RefHelp.FieldRef<object, Dress[]> RefDresses;
         }
     }
 }
