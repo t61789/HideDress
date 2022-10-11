@@ -83,7 +83,11 @@ namespace SkinHide.Utils
             {
                 ilGen.Emit(OpCodes.Ldarg, i);
 
-                if (!parameterTypes[i].IsValueType)
+                if (DelegateparameterTypes[i - num] == typeof(object) && parameterTypes[i].IsValueType)
+                {
+                    ilGen.Emit(OpCodes.Unbox_Any, parameterTypes[i]);
+                }
+                else
                 {
                     ilGen.Emit(OpCodes.Castclass, parameterTypes[i]);
                 }
@@ -126,7 +130,7 @@ namespace SkinHide.Utils
 
             public Type InType;
 
-            public Type ReturnType;
+            public Type PropertyType;
 
             public PropertyRef(PropertyInfo propertyinfo, object instance = null)
             {
@@ -144,29 +148,24 @@ namespace SkinHide.Utils
 
                 TType = PropertyInfo.DeclaringType;
 
+                InType = TType;
+
+                PropertyType = PropertyInfo.PropertyType;
+
                 Instance = (T)instance;
 
-                GetMethodInfo = PropertyInfo.GetGetMethod(true);
-
-                if (GetMethodInfo != null)
+                if (PropertyInfo.CanRead)
                 {
+                    GetMethodInfo = PropertyInfo.GetGetMethod(true);
+
                     RefGetValue = ObjectMethodDelegate<Func<T, F>>(GetMethodInfo);
                 }
 
-                SetMethodInfo = PropertyInfo.GetSetMethod(true);
-
-                if (SetMethodInfo != null)
+                if (PropertyInfo.CanWrite)
                 {
+                    SetMethodInfo = PropertyInfo.GetSetMethod(true);
+
                     RefSetValue = ObjectMethodDelegate<Action<T, F>>(SetMethodInfo);
-                }
-
-                if (GetMethodInfo != null && SetMethodInfo != null)
-                {
-                    ReturnType = GetMethodInfo.ReturnType;
-                }
-                else if (GetMethodInfo != null || SetMethodInfo != null)
-                {
-                    ReturnType = GetMethodInfo != null ? GetMethodInfo.ReturnType : SetMethodInfo.ReturnType;
                 }
             }
 
