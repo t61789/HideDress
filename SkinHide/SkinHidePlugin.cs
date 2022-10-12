@@ -23,6 +23,12 @@ namespace SkinHide
 
         private ReflectionData reflectiondata = new ReflectionData();
 
+        private bool PMVHideCache;
+
+        private bool PlayerHideCache;
+
+        private bool BotHideCache;
+
         public enum Part
         {
             All,
@@ -69,25 +75,66 @@ namespace SkinHide
             //PlayerModelView Skin Hide
             if (PlayerModelView != null)
             {
-                Hide(PlayerModelView, settingsdata.KeyPlayerSkinHidePart.Value, settingsdata.KeyPlayerSkinHide.Value);
+                if (settingsdata.KeyPlayerSkinHide.Value)
+                {
+                    Hide(PlayerModelView, settingsdata.KeyPlayerSkinHidePart.Value, settingsdata.KeyPlayerSkinHide.Value);
+
+                    PMVHideCache = true;
+                }
+
+                if (!settingsdata.KeyPlayerSkinHide.Value && PMVHideCache)
+                {
+                    Hide(PlayerModelView, Part.All, false);
+
+                    PMVHideCache = false;
+                }
             }
 
             //Player Skin Hide
             if (Player != null)
             {
-                Hide(Player, settingsdata.KeyPlayerSkinHidePart.Value, settingsdata.KeyPlayerSkinHide.Value);
+                if (settingsdata.KeyPlayerSkinHide.Value)
+                {
+                    Hide(Player, settingsdata.KeyPlayerSkinHidePart.Value, settingsdata.KeyPlayerSkinHide.Value);
+
+                    PlayerHideCache = true;
+                }
+
+                if (!settingsdata.KeyPlayerSkinHide.Value && PlayerHideCache)
+                {
+                    Hide(Player, Part.All, false);
+                }
             }
             else
             {
+                PMVHideCache = false;
+                PlayerHideCache = false;
+                BotHideCache = false;
+
                 Bot.Clear();
             }
 
             //Bot Skin Hide
             if (Bot.Count > 0)
             {
-                foreach (PlayerBody bot in Bot)
+                if (settingsdata.KeyBotSkinHide.Value)
                 {
-                    Hide(bot, settingsdata.KeyBotSkinHidePart.Value, settingsdata.KeyBotSkinHide.Value);
+                    foreach (PlayerBody bot in Bot)
+                    {
+                        Hide(bot, settingsdata.KeyBotSkinHidePart.Value, settingsdata.KeyBotSkinHide.Value);
+                    }
+
+                    BotHideCache = true;
+                }
+
+                if (!settingsdata.KeyBotSkinHide.Value && BotHideCache)
+                {
+                    foreach (PlayerBody bot in Bot)
+                    {
+                        Hide(bot, Part.All, false);
+                    }
+
+                    BotHideCache = false;
                 }
             }
         }
@@ -102,7 +149,7 @@ namespace SkinHide
 
             GameObject[] dress = dresses.Where(x => x.GetType() == typeof(Dress)).Select(x => x.gameObject).ToArray();
 
-            MeshRenderer[] renderers = dress.SelectMany(x => x.gameObject.GetComponentsInChildren<MeshRenderer>()).ToArray();
+            MeshRenderer[] renderers = dress.SelectMany(x => x.GetComponentsInChildren<MeshRenderer>()).ToArray();
 
             GameObject[] skindress = dresses.Where(x => x.GetType() == typeof(SkinDress) || x.GetType() == typeof(ArmBandView)).Select(x => x.gameObject).ToArray();
 
