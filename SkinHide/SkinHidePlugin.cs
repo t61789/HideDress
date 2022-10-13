@@ -19,9 +19,9 @@ namespace SkinHide
 
         internal static List<PlayerBody> Bot = new List<PlayerBody>();
 
-        private SettingsData settingsdata = new SettingsData();
+        private readonly SettingsData settingsdata = new SettingsData();
 
-        private ReflectionData reflectiondata = new ReflectionData();
+        private readonly ReflectionData reflectiondata = new ReflectionData();
 
         public enum Part
         {
