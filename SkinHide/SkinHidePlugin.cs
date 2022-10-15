@@ -135,13 +135,13 @@ namespace SkinHide
 
             IEnumerable<object> slotlist = reflectiondata.RefSlotList.GetValue(slotviews);
 
-            Dress[] dresses = slotlist.Where(x => reflectiondata.RefDresses.GetValue(x) != null).SelectMany(x => reflectiondata.RefDresses.GetValue(x)).ToArray();
+            IEnumerable<Dress> dresses = slotlist.Where(x => reflectiondata.RefDresses.GetValue(x) != null).SelectMany(x => reflectiondata.RefDresses.GetValue(x));
 
-            GameObject[] dress = dresses.Where(x => x.GetType() == typeof(Dress)).Select(x => x.gameObject).ToArray();
+            IEnumerable<GameObject> dress = dresses.Where(x => x.GetType() == typeof(Dress)).Select(x => x.gameObject);
 
-            MeshRenderer[] renderers = dress.SelectMany(x => x.GetComponentsInChildren<MeshRenderer>()).ToArray();
+            IEnumerable<MeshRenderer> renderers = dress.SelectMany(x => x.GetComponentsInChildren<MeshRenderer>());
 
-            GameObject[] skindress = dresses.Where(x => x.GetType() == typeof(SkinDress) || x.GetType() == typeof(ArmBandView)).Select(x => x.gameObject).ToArray();
+            IEnumerable<GameObject> skindress = dresses.Where(x => x.GetType() == typeof(SkinDress) || x.GetType() == typeof(ArmBandView)).Select(x => x.gameObject);
 
             switch (part)
             {
