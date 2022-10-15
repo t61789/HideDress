@@ -8,6 +8,7 @@ using EFT.Visual;
 using SkinHide.Patches;
 using SkinHide.Utils;
 using System;
+using EFT.UI.DragAndDrop;
 
 namespace SkinHide
 {
@@ -60,6 +61,7 @@ namespace SkinHide
             reflectiondata.RefSlotViews = RefHelp.FieldRef<PlayerBody, object>.Create("SlotViews");
             reflectiondata.RefSlotList = RefHelp.FieldRef<object, IEnumerable<object>>.Create(reflectiondata.RefSlotViews.FieldType, "list_0");
             reflectiondata.RefDresses = RefHelp.FieldRef<object, Dress[]>.Create(reflectiondata.RefSlotList.FieldType.GetGenericArguments()[0], "Dresses");
+            reflectiondata.RefRenderers = RefHelp.FieldRef<Dress, Renderer[]>.Create("Renderers");
         }
 
         void Update()
@@ -135,11 +137,24 @@ namespace SkinHide
 
             IEnumerable<object> slotlist = reflectiondata.RefSlotList.GetValue(slotviews);
 
-            IEnumerable<Dress> dresses = slotlist.Where(x => reflectiondata.RefDresses.GetValue(x) != null).SelectMany(x => reflectiondata.RefDresses.GetValue(x));
+            List<Dress> dresses = new List<Dress>();
 
-            IEnumerable<GameObject> dress = dresses.Where(x => x.GetType() == typeof(Dress)).Select(x => x.gameObject);
+            foreach (object slot in slotlist)
+            {
+                Dress[] dres = reflectiondata.RefDresses.GetValue(slot);
 
-            IEnumerable<MeshRenderer> renderers = dress.SelectMany(x => x.GetComponentsInChildren<MeshRenderer>());
+                if (dres != null)
+                {
+                    foreach (Dress dr in dres)
+                    {
+                        dresses.Add(dr);
+                    }
+                }
+            }
+
+            IEnumerable<Dress> dress = dresses.Where(x => x.GetType() == typeof(Dress));
+
+            IEnumerable<Renderer> renderers = dress.SelectMany(x => reflectiondata.RefRenderers.GetValue(x));
 
             IEnumerable<GameObject> skindress = dresses.Where(x => x.GetType() == typeof(SkinDress) || x.GetType() == typeof(ArmBandView)).Select(x => x.gameObject);
 
@@ -188,6 +203,7 @@ namespace SkinHide
             public RefHelp.FieldRef<PlayerBody, object> RefSlotViews;
             public RefHelp.FieldRef<object, IEnumerable<object>> RefSlotList;
             public RefHelp.FieldRef<object, Dress[]> RefDresses;
+            public RefHelp.FieldRef<Dress, Renderer[]> RefRenderers;
         }
     }
 }
