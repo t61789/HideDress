@@ -7,6 +7,7 @@ using EFT;
 using EFT.Visual;
 using SkinHide.Patches;
 using SkinHide.Utils;
+using System;
 
 namespace SkinHide
 {
@@ -22,6 +23,12 @@ namespace SkinHide
         private readonly SettingsData settingsdata = new SettingsData();
 
         private readonly ReflectionData reflectiondata = new ReflectionData();
+
+        private bool PMVHideCache;
+
+        private bool PlayerHideCache;
+
+        private bool BotHideCache;
 
         public enum Part
         {
@@ -67,15 +74,34 @@ namespace SkinHide
             }
 
             //PlayerModelView Skin Hide
-            if (PlayerModelView != null)
+            if (PlayerModelView != null && settingsdata.KeyPlayerSkinHide.Value)
             {
-                Hide(PlayerModelView, settingsdata.KeyPlayerSkinHidePart.Value, settingsdata.KeyPlayerSkinHide.Value);
+                Hide(PlayerModelView, settingsdata.KeyPlayerSkinHidePart.Value, true);
+
+                PMVHideCache = true;
+            }
+            else if (PlayerModelView != null && !settingsdata.KeyPlayerSkinHide.Value && PMVHideCache)
+            {
+                Hide(PlayerModelView, Part.All, false);
+
+                PMVHideCache = false;
             }
 
             //Player Skin Hide
             if (Player != null)
             {
-                Hide(Player, settingsdata.KeyPlayerSkinHidePart.Value, settingsdata.KeyPlayerSkinHide.Value);
+                if (settingsdata.KeyPlayerSkinHide.Value)
+                {
+                    Hide(Player, settingsdata.KeyPlayerSkinHidePart.Value, true);
+
+                    PlayerHideCache = true;
+                }
+                else if (!settingsdata.KeyPlayerSkinHide.Value && PlayerHideCache)
+                {
+                    Hide(Player, Part.All, false);
+
+                    PlayerHideCache = false;
+                }
             }
             else
             {
@@ -83,12 +109,23 @@ namespace SkinHide
             }
 
             //Bot Skin Hide
-            if (Bot.Count > 0)
+            if (Bot.Count > 0 && settingsdata.KeyBotSkinHide.Value)
             {
                 foreach (PlayerBody bot in Bot)
                 {
-                    Hide(bot, settingsdata.KeyBotSkinHidePart.Value, settingsdata.KeyBotSkinHide.Value);
+                    Hide(bot, settingsdata.KeyBotSkinHidePart.Value, true);
                 }
+
+                BotHideCache = true;
+            }
+            else if (Bot.Count > 0 && !settingsdata.KeyBotSkinHide.Value && BotHideCache)
+            {
+                foreach (PlayerBody bot in Bot)
+                {
+                    Hide(bot, Part.All, false);
+                }
+
+                BotHideCache = false;
             }
         }
 
