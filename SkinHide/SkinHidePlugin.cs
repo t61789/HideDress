@@ -139,7 +139,7 @@ namespace SkinHide
 
             GameObject[] dress = dresses.Where(x => x.GetType() == typeof(Dress)).Select(x => x.gameObject).ToArray();
 
-            MeshRenderer[] renderers = dress.SelectMany(x => x.gameObject.GetComponentsInChildren<MeshRenderer>()).ToArray();
+            MeshRenderer[] renderers = dress.SelectMany(x => x.GetComponentsInChildren<MeshRenderer>()).ToArray();
 
             GameObject[] skindress = dresses.Where(x => x.GetType() == typeof(SkinDress) || x.GetType() == typeof(ArmBandView)).Select(x => x.gameObject).ToArray();
 
