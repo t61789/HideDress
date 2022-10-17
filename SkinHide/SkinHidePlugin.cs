@@ -7,8 +7,6 @@ using EFT;
 using EFT.Visual;
 using SkinHide.Patches;
 using SkinHide.Utils;
-using System;
-using EFT.UI.DragAndDrop;
 
 namespace SkinHide
 {
