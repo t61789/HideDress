@@ -26,18 +26,18 @@ namespace SkinHide.Patches
                 Is231Up = typeof(Player).GetProperty("IsYourPlayer").GetSetMethod() == null;
             }
 
-            bool isyouplayer;
+            bool isYouPlayer;
 
             if ((bool)Is231Up)
             {
-                isyouplayer = __instance.IsYourPlayer;
+                isYouPlayer = __instance.IsYourPlayer;
             }
             else
             {
-                isyouplayer = __instance == Singleton<GameWorld>.Instance.AllPlayers[0];
+                isYouPlayer = __instance == Singleton<GameWorld>.Instance.AllPlayers[0];
             }
 
-            if (isyouplayer)
+            if (isYouPlayer)
             {
                 SkinHidePlugin.Player = __instance.PlayerBody;
             }
