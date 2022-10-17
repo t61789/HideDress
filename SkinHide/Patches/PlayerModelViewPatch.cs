@@ -2,7 +2,6 @@
 using Aki.Reflection.Utils;
 using System.Reflection;
 using System.Threading.Tasks;
-using EFT;
 using EFT.UI;
 
 namespace SkinHide.Patches
