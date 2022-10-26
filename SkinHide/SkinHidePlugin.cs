@@ -56,9 +56,9 @@ namespace SkinHide
             new PlayerModelViewPatch().Enable();
             new PlayerPatch().Enable();
 
-            ReflectionDatas.RefSlotViews = RefHelp.FieldRef<PlayerBody, object>.Create(new string[] { "SlotViews" });
-            ReflectionDatas.RefSlotList = RefHelp.FieldRef<object, IEnumerable<object>>.Create(ReflectionDatas.RefSlotViews.FieldType, new string[] { "list_0" });
-            ReflectionDatas.RefDresses = RefHelp.FieldRef<object, Dress[]>.Create(ReflectionDatas.RefSlotList.FieldType.GetGenericArguments()[0], new string[] { "Dresses" });
+            ReflectionDatas.RefSlotViews = RefHelp.FieldRef<PlayerBody, object>.Create("SlotViews");
+            ReflectionDatas.RefSlotList = RefHelp.FieldRef<object, IEnumerable<object>>.Create(ReflectionDatas.RefSlotViews.FieldType, "list_0");
+            ReflectionDatas.RefDresses = RefHelp.FieldRef<object, Dress[]>.Create(ReflectionDatas.RefSlotList.FieldType.GetGenericArguments()[0], "Dresses");
             ReflectionDatas.RefRenderers = RefHelp.FieldRef<Dress, Renderer[]>.Create(new string[] { "Renderers" });
         }
 
