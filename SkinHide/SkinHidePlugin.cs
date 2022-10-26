@@ -59,7 +59,7 @@ namespace SkinHide
             ReflectionDatas.RefSlotViews = RefHelp.FieldRef<PlayerBody, object>.Create("SlotViews");
             ReflectionDatas.RefSlotList = RefHelp.FieldRef<object, IEnumerable<object>>.Create(ReflectionDatas.RefSlotViews.FieldType, "list_0");
             ReflectionDatas.RefDresses = RefHelp.FieldRef<object, Dress[]>.Create(ReflectionDatas.RefSlotList.FieldType.GetGenericArguments()[0], "Dresses");
-            ReflectionDatas.RefRenderers = RefHelp.FieldRef<Dress, Renderer[]>.Create(new string[] { "Renderers" });
+            ReflectionDatas.RefRenderers = RefHelp.FieldRef<Dress, Renderer[]>.Create("Renderers");
         }
 
         void Update()
