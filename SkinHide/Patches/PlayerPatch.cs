@@ -9,7 +9,12 @@ namespace SkinHide.Patches
 {
     public class PlayerPatch : ModulePatch
     {
-        private static bool? Is231Up;
+        private static bool Is231Up;
+
+        static PlayerPatch()
+        {
+            Is231Up = typeof(Player).GetProperty("IsYourPlayer").GetSetMethod() == null;
+        }
 
         protected override MethodBase GetTargetMethod()
         {
@@ -20,11 +25,6 @@ namespace SkinHide.Patches
         private async static void PatchPostfix(Task __result, Player __instance)
         {
             await __result;
-
-            if (!Is231Up.HasValue)
-            {
-                Is231Up = typeof(Player).GetProperty("IsYourPlayer").GetSetMethod() == null;
-            }
 
             bool isYouPlayer;
 
