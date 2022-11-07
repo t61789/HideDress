@@ -9,7 +9,7 @@ namespace SkinHide.Patches
 {
     public class PlayerPatch : ModulePatch
     {
-        private static bool Is231Up;
+        private static readonly bool Is231Up;
 
         static PlayerPatch()
         {
