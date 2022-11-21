@@ -40,9 +40,9 @@ namespace SkinHide
         {
             Logger.LogInfo("Loaded: kmyuhkyuk-SkinHide");
 
-            string skinHideSettings = "Skin Hide Settings";
-            string skinHidePartSettings = "隐藏部分设置 Skin Hide Part Settings";
-            string kbsSettings = "快捷键设置 Keyboard Shortcut Settings";
+            const string skinHideSettings = "Skin Hide Settings";
+            const string skinHidePartSettings = "隐藏部分设置 Skin Hide Part Settings";
+            const string kbsSettings = "快捷键设置 Keyboard Shortcut Settings";
 
             SettingsDatas.KeyPlayerSkinHide = Config.Bind<bool>(skinHideSettings, "玩家服装隐藏 Player Skin Hide", false);
             SettingsDatas.KeyBotSkinHide = Config.Bind<bool>(skinHideSettings, "Bot服装隐藏 Bot Skin Hide", false);
