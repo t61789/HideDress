@@ -29,7 +29,7 @@ namespace SkinHide.Patches
 
             bool isYouPlayer;
 
-            if ((bool)Is231Up)
+            if (Is231Up)
             {
                 isYouPlayer = __instance.IsYourPlayer;
             }
