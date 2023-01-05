@@ -12,11 +12,6 @@ namespace SkinHide.Patches
     {
         private static readonly bool Is231Up = SkinHidePlugin.GameVersion > new Version("0.12.12.17349");
 
-        static PlayerPatch()
-        {
-            Is231Up = typeof(Player).GetProperty("IsYourPlayer").GetSetMethod() == null;
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return typeof(Player).GetMethod("Init", PatchConstants.PrivateFlags);
