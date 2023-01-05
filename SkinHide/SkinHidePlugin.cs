@@ -7,6 +7,8 @@ using EFT;
 using EFT.Visual;
 using SkinHide.Patches;
 using SkinHide.Utils;
+using System.Diagnostics;
+using System;
 
 namespace SkinHide
 {
@@ -28,6 +30,16 @@ namespace SkinHide
         private bool PlayerHideCache;
 
         private bool BotHideCache;
+
+        public static Version GameVersion
+        {
+            get
+            {
+                FileVersionInfo exeInfo = Process.GetCurrentProcess().MainModule.FileVersionInfo;
+
+                return new Version(exeInfo.FileMajorPart, exeInfo.ProductMinorPart, exeInfo.ProductBuildPart, exeInfo.FilePrivatePart);
+            }
+        }
 
         public enum Part
         {

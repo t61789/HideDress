@@ -1,5 +1,6 @@
 ﻿using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
+using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using Comfort.Common;
@@ -9,7 +10,7 @@ namespace SkinHide.Patches
 {
     public class PlayerPatch : ModulePatch
     {
-        private static readonly bool Is231Up;
+        private static readonly bool Is231Up = SkinHidePlugin.GameVersion > new Version("0.12.12.17349");
 
         static PlayerPatch()
         {
