@@ -1,14 +1,14 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
+using System;
 using System.Linq;
+using System.Diagnostics;
 using System.Collections.Generic;
 using UnityEngine;
 using EFT;
 using EFT.Visual;
 using SkinHide.Patches;
 using SkinHide.Utils;
-using System.Diagnostics;
-using System;
 
 namespace SkinHide
 {
@@ -31,15 +31,7 @@ namespace SkinHide
 
         private bool BotHideCache;
 
-        public static Version GameVersion
-        {
-            get
-            {
-                FileVersionInfo exeInfo = Process.GetCurrentProcess().MainModule.FileVersionInfo;
-
-                return new Version(exeInfo.FileMajorPart, exeInfo.ProductMinorPart, exeInfo.ProductBuildPart, exeInfo.FilePrivatePart);
-            }
-        }
+        public static Version GameVersion { get; private set; }
 
         public enum Part
         {
@@ -51,6 +43,10 @@ namespace SkinHide
         private void Start()
         {
             Logger.LogInfo("Loaded: kmyuhkyuk-SkinHide");
+
+            FileVersionInfo exeInfo = Process.GetCurrentProcess().MainModule.FileVersionInfo;
+
+            GameVersion = new Version(exeInfo.FileMajorPart, exeInfo.ProductMinorPart, exeInfo.ProductBuildPart, exeInfo.FilePrivatePart);
 
             const string skinHideSettings = "Skin Hide Settings";
             const string skinHidePartSettings = "隐藏部分设置 Skin Hide Part Settings";
