@@ -31,7 +31,7 @@ namespace SkinHide
 
         private bool BotHideCache;
 
-        public static Version GameVersion { get; private set; }
+        internal static Version GameVersion { get; private set; }
 
         public enum Part
         {
