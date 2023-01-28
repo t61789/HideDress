@@ -3,7 +3,6 @@ using Aki.Reflection.Utils;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
-using Comfort.Common;
 using EFT;
 
 namespace SkinHide.Patches
