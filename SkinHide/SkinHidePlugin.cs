@@ -9,6 +9,7 @@ using EFT;
 using EFT.Visual;
 using SkinHide.Patches;
 using SkinHide.Utils;
+using EFT.InventoryLogic;
 
 namespace SkinHide
 {
@@ -143,20 +144,7 @@ namespace SkinHide
 
             IEnumerable<object> slotList = ReflectionDatas.RefSlotList.GetValue(slotViews);
 
-            List<Dress> dresses = new List<Dress>();
-
-            foreach (object slot in slotList)
-            {
-                Dress[] dres = ReflectionDatas.RefDresses.GetValue(slot);
-
-                if (dres != null)
-                {
-                    foreach (Dress dr in dres)
-                    {
-                        dresses.Add(dr);
-                    }
-                }
-            }
+            IEnumerable<Dress> dresses = slotList.SelectMany(x => ReflectionDatas.RefDresses.GetValue(x)).Where(x => x != null);
 
             IEnumerable<Dress> dress = dresses.Where(x => x.GetType() == typeof(Dress));
 
