@@ -83,17 +83,20 @@ namespace SkinHide
             }
 
             //PlayerModelView Skin Hide
-            if (PlayerModelView != null && SettingsDatas.KeyPlayerSkinHide.Value)
+            if (PlayerModelView != null)
             {
-                Hide(PlayerModelView, SettingsDatas.KeyPlayerSkinHidePart.Value, true);
+                if (SettingsDatas.KeyPlayerSkinHide.Value)
+                {
+                    Hide(PlayerModelView, SettingsDatas.KeyPlayerSkinHidePart.Value, true);
 
-                PMVHideCache = true;
-            }
-            else if (PlayerModelView != null && !SettingsDatas.KeyPlayerSkinHide.Value && PMVHideCache)
-            {
-                Hide(PlayerModelView, Part.All, false);
+                    PMVHideCache = true;
+                }
+                else if (!SettingsDatas.KeyPlayerSkinHide.Value && PMVHideCache)
+                {
+                    Hide(PlayerModelView, Part.All, false);
 
-                PMVHideCache = false;
+                    PMVHideCache = false;
+                }
             }
 
             //Player Skin Hide
@@ -118,23 +121,26 @@ namespace SkinHide
             }
 
             //Bot Skin Hide
-            if (Bot.Count > 0 && SettingsDatas.KeyBotSkinHide.Value)
+            if (Bot.Count > 0)
             {
-                foreach (PlayerBody bot in Bot)
+                if (SettingsDatas.KeyBotSkinHide.Value)
                 {
-                    Hide(bot, SettingsDatas.KeyBotSkinHidePart.Value, true);
-                }
+                    foreach (PlayerBody bot in Bot)
+                    {
+                        Hide(bot, SettingsDatas.KeyBotSkinHidePart.Value, true);
+                    }
 
-                BotHideCache = true;
-            }
-            else if (Bot.Count > 0 && !SettingsDatas.KeyBotSkinHide.Value && BotHideCache)
-            {
-                foreach (PlayerBody bot in Bot)
+                    BotHideCache = true;
+                }
+                else if (!SettingsDatas.KeyBotSkinHide.Value && BotHideCache)
                 {
-                    Hide(bot, Part.All, false);
-                }
+                    foreach (PlayerBody bot in Bot)
+                    {
+                        Hide(bot, Part.All, false);
+                    }
 
-                BotHideCache = false;
+                    BotHideCache = false;
+                }
             }
         }
 
