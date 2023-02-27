@@ -7,7 +7,7 @@ using EFT;
 
 namespace SkinHide.Patches
 {
-    public class PlayerPatch : ModulePatch
+    public class PlayerInitPatch : ModulePatch
     {
         private static readonly bool Is231Up = SkinHidePlugin.GameVersion > new Version("0.12.12.17349");
 
@@ -38,7 +38,37 @@ namespace SkinHide.Patches
             }
             else
             {
-                SkinHidePlugin.Bot.Add(__instance.PlayerBody);
+                SkinHidePlugin.BotList.Add(__instance.PlayerBody);
+            }
+        }
+    }
+
+    public class PlayerEndPatch : ModulePatch
+    {
+        private static readonly bool Is231Up = SkinHidePlugin.GameVersion > new Version("0.12.12.17349");
+
+        protected override MethodBase GetTargetMethod()
+        {
+            return typeof(Player).GetMethod("OnGameSessionEnd", BindingFlags.Public | BindingFlags.Instance);
+        }
+
+        [PatchPostfix]
+        private static void PatchPostfix(Player __instance)
+        {
+            bool isYouPlayer;
+
+            if (Is231Up)
+            {
+                isYouPlayer = __instance.IsYourPlayer;
+            }
+            else
+            {
+                isYouPlayer = __instance.Id == 1;
+            }
+
+            if (isYouPlayer)
+            {
+                SkinHidePlugin.BotList.Clear();
             }
         }
     }

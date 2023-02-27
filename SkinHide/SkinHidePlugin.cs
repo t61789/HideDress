@@ -20,7 +20,7 @@ namespace SkinHide
 
         internal static PlayerBody PlayerModelView;
 
-        internal static List<PlayerBody> Bot = new List<PlayerBody>();
+        internal static List<PlayerBody> BotList = new List<PlayerBody>();
 
         private readonly SettingsData SettingsDatas = new SettingsData();
 
@@ -63,7 +63,8 @@ namespace SkinHide
             SettingsDatas.KBSBotSkinHide = Config.Bind<KeyboardShortcut>(kbsSettings, "Bot服装隐藏快捷键 Bot Skin Hide", KeyboardShortcut.Empty);
 
             new PlayerModelViewPatch().Enable();
-            new PlayerPatch().Enable();
+            new PlayerInitPatch().Enable();
+            new PlayerEndPatch().Enable();
 
             ReflectionDatas.RefSlotViews = RefHelp.FieldRef<PlayerBody, object>.Create("SlotViews");
             ReflectionDatas.RefSlotList = RefHelp.FieldRef<object, IEnumerable<object>>.Create(ReflectionDatas.RefSlotViews.FieldType, "list_0");
@@ -115,17 +116,13 @@ namespace SkinHide
                     PlayerHideCache = false;
                 }
             }
-            else
-            {
-                Bot.Clear();
-            }
 
             //Bot Skin Hide
-            if (Bot.Count > 0)
+            if (BotList.Count > 0)
             {
                 if (SettingsDatas.KeyBotSkinHide.Value)
                 {
-                    foreach (PlayerBody bot in Bot)
+                    foreach (PlayerBody bot in BotList)
                     {
                         Hide(bot, SettingsDatas.KeyBotSkinHidePart.Value, true);
                     }
@@ -134,7 +131,7 @@ namespace SkinHide
                 }
                 else if (!SettingsDatas.KeyBotSkinHide.Value && BotHideCache)
                 {
-                    foreach (PlayerBody bot in Bot)
+                    foreach (PlayerBody bot in BotList)
                     {
                         Hide(bot, Part.All, false);
                     }
