@@ -7,8 +7,8 @@
     <ProjectGuid>{E5DD6484-115E-4104-AADF-E5610EE4F397}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SkinHide</RootNamespace>
-    <AssemblyName>SkinHide</AssemblyName>
+    <RootNamespace>HideDress</RootNamespace>
+    <AssemblyName>HideDress</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -55,6 +55,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>R:\Battlestate Games\Client.0.12.12.15.17349\EscapeFromTarkov_Data\Managed\Comfort.dll</HintPath>
     </Reference>
+    <Reference Include="EFTApi">
+      <HintPath>..\..\EFTApi\Build\bin\Current\EFTApi.dll</HintPath>
+    </Reference>
+    <Reference Include="EFTReflection">
+      <HintPath>..\..\EFTApi\Build\bin\Current\EFTReflection.dll</HintPath>
+    </Reference>
     <Reference Include="Sirenix.Serialization, Version=3.0.4.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -78,11 +84,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Patches\PlayerPatch.cs" />
-    <Compile Include="Patches\PlayerModelViewPatch.cs" />
-    <Compile Include="SkinHidePlugin.cs" />
+    <Compile Include="Models\ReflectionModel.cs" />
+    <Compile Include="Models\SettingsModel.cs" />
+    <Compile Include="Models\HideDressModel.cs" />
+    <Compile Include="HideDressPlugin.cs" />
+    <Compile Include="Patches\PlayerModelViewShow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\RefHelp.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="kmyuhkyuk.pfx" />
