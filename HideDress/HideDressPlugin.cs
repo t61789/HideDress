@@ -3,6 +3,7 @@ using System.Linq;
 using BepInEx;
 using EFT;
 using EFT.Visual;
+using HideDress.Attributes;
 using HideDress.Models;
 using static EFTApi.EFTHelpers;
 
@@ -10,6 +11,7 @@ namespace HideDress
 {
     [BepInPlugin("com.kmyuhkyuk.HideDress", "kmyuhkyuk-HideDress", "1.2.7")]
     [BepInDependency("com.kmyuhkyuk.EFTApi", "1.2.0")]
+    [EFTConfigurationPluginAttributes("https://hub.sp-tarkov.com/files/file/583-skin-hide")]
     public partial class HideDressPlugin : BaseUnityPlugin
     {
         private void Awake()

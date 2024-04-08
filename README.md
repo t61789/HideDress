@@ -1,6 +1,6 @@
-# SkinHide
+# HideDress
 
-Hide Player and Bot all Gear
+Hide Player Dress
 
 ## How build the source
 1. Dowload or Clone the branch

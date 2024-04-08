@@ -84,6 +84,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\EFTConfigurationPluginAttributes.cs" />
     <Compile Include="Models\ReflectionModel.cs" />
     <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="Models\HideDressModel.cs" />
