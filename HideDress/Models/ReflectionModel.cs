@@ -32,7 +32,8 @@ namespace HideDress.Models
                 RefHelper.FieldRef<object, Dress[]>.Create(RefSlotList.FieldType.GetGenericArguments()[0], "Dresses");
             RefRenderers = RefHelper.FieldRef<Dress, Renderer[]>.Create("Renderers");
 
-            PlayerModelViewShow = RefHelper.HookRef.Create(typeof(PlayerModelView), x => x.Name == "Show" && x.GetParameters()[0].ParameterType == typeof(PlayerVisualRepresentation));
+            PlayerModelViewShow = RefHelper.HookRef.Create(typeof(PlayerModelView),
+                x => x.Name == "Show" && x.GetParameters()[0].ParameterType == typeof(PlayerVisualRepresentation));
         }
     }
 }

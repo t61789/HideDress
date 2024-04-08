@@ -43,19 +43,22 @@ namespace HideDress
 
             if (hideDressModel.PlayerModelViewBody != null)
             {
-                EnabledPartDress(hideDressModel.PlayerModelViewBody, settingsModel.KeyPlayerHideDressPart.Value, !settingsModel.KeyPlayerHideDress.Value);
+                EnabledPartDress(hideDressModel.PlayerModelViewBody, settingsModel.KeyPlayerHideDressPart.Value,
+                    !settingsModel.KeyPlayerHideDress.Value);
             }
 
             if (player != null)
             {
-                EnabledPartDress(player.PlayerBody, settingsModel.KeyPlayerHideDressPart.Value, !settingsModel.KeyPlayerHideDress.Value);
+                EnabledPartDress(player.PlayerBody, settingsModel.KeyPlayerHideDressPart.Value,
+                    !settingsModel.KeyPlayerHideDress.Value);
             }
 
             if (world != null)
             {
                 foreach (var otherPlayer in _GameWorldHelper.AllOtherPlayer)
                 {
-                    EnabledPartDress(otherPlayer.PlayerBody, settingsModel.KeyOtherPlayerHideDressPart.Value, !settingsModel.KeyOtherPlayerHideDress.Value);
+                    EnabledPartDress(otherPlayer.PlayerBody, settingsModel.KeyOtherPlayerHideDressPart.Value,
+                        !settingsModel.KeyOtherPlayerHideDress.Value);
                 }
             }
         }
@@ -74,7 +77,7 @@ namespace HideDress
             {
                 var dresses = reflectionModel.RefDresses.GetValue(slot);
 
-                if (dresses == null) 
+                if (dresses == null)
                     continue;
 
                 foreach (var dress in dresses)
@@ -83,8 +86,10 @@ namespace HideDress
                 }
             }
 
-            EnabledDress(dressList.Where(x => x.GetType() == typeof(Dress)), part == HideDressModel.DressPart.SkinDress || enabled);
-            EnabledSkinDress(dressList.Where(x => x is SkinDress || x is ArmBandView), part == HideDressModel.DressPart.Dress || enabled);
+            EnabledDress(dressList.Where(x => x.GetType() == typeof(Dress)),
+                part == HideDressModel.DressPart.SkinDress || enabled);
+            EnabledSkinDress(dressList.Where(x => x is SkinDress || x is ArmBandView),
+                part == HideDressModel.DressPart.Dress || enabled);
         }
 
         private static void EnabledDress(IEnumerable<Dress> dressEnumerable, bool enabled)

@@ -27,9 +27,11 @@ namespace HideDress.Models
             KeyOtherPlayerHideDress = configFile.Bind<bool>(hideDressSettings, "Hide Other Player Dress", false);
 
             KeyPlayerHideDressPart =
-                configFile.Bind<HideDressModel.DressPart>(hideDressPartSettings, "Player", HideDressModel.DressPart.Both);
+                configFile.Bind<HideDressModel.DressPart>(hideDressPartSettings, "Player",
+                    HideDressModel.DressPart.Both);
             KeyOtherPlayerHideDressPart =
-                configFile.Bind<HideDressModel.DressPart>(hideDressPartSettings, "Other Player", HideDressModel.DressPart.Both);
+                configFile.Bind<HideDressModel.DressPart>(hideDressPartSettings, "Other Player",
+                    HideDressModel.DressPart.Both);
 
             KeyPlayerHideDressShortcut =
                 configFile.Bind<KeyboardShortcut>(shortcutSettings, "Hide Player Dress",
