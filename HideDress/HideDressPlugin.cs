@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BepInEx;
 using EFT;
 using EFT.Visual;
@@ -40,30 +41,26 @@ namespace HideDress
                 settingsModel.KeyOtherPlayerHideDress.Value = !settingsModel.KeyOtherPlayerHideDress.Value;
             }
 
-            if (settingsModel.KeyPlayerHideDressPart.Value != HideDressModel.DressPart.None &&
-                hideDressModel.PlayerModelViewBody != null)
+            if (settingsModel.KeyPlayerHideDress.Value && hideDressModel.PlayerModelViewBody != null)
             {
-                EnabledPartDress(hideDressModel.PlayerModelViewBody, settingsModel.KeyPlayerHideDressPart.Value,
-                    !settingsModel.KeyPlayerHideDress.Value);
+                EnabledPartDress(hideDressModel.PlayerModelViewBody, settingsModel.KeyPlayerHideDressPart.Value);
             }
 
-            if (settingsModel.KeyPlayerHideDressPart.Value != HideDressModel.DressPart.None && player != null)
+            if (settingsModel.KeyPlayerHideDress.Value && player != null)
             {
-                EnabledPartDress(player.PlayerBody, settingsModel.KeyPlayerHideDressPart.Value,
-                    !settingsModel.KeyPlayerHideDress.Value);
+                EnabledPartDress(player.PlayerBody, settingsModel.KeyPlayerHideDressPart.Value);
             }
 
-            if (settingsModel.KeyOtherPlayerHideDressPart.Value != HideDressModel.DressPart.None && world != null)
+            if (settingsModel.KeyOtherPlayerHideDress.Value && world != null)
             {
                 foreach (var otherPlayer in _GameWorldHelper.AllOtherPlayer)
                 {
-                    EnabledPartDress(otherPlayer.PlayerBody, settingsModel.KeyOtherPlayerHideDressPart.Value,
-                        !settingsModel.KeyOtherPlayerHideDress.Value);
+                    EnabledPartDress(otherPlayer.PlayerBody, settingsModel.KeyOtherPlayerHideDressPart.Value);
                 }
             }
         }
 
-        private static void EnabledPartDress(PlayerBody playerBody, HideDressModel.DressPart part, bool enabled)
+        private static void EnabledPartDress(PlayerBody playerBody, HideDressModel.DressPart dressPart)
         {
             var reflectionModel = ReflectionModel.Instance;
 
@@ -86,10 +83,27 @@ namespace HideDress
                 }
             }
 
-            EnabledDress(dressList,
-                part == HideDressModel.DressPart.SkinDress || enabled);
-            EnabledSkinDress(dressList,
-                part == HideDressModel.DressPart.Dress || enabled);
+            switch (dressPart)
+            {
+                case HideDressModel.DressPart.Both:
+                    EnabledDress(dressList, false);
+                    EnabledSkinDress(dressList, false);
+                    break;
+                case HideDressModel.DressPart.Dress:
+                    EnabledDress(dressList, false);
+                    EnabledSkinDress(dressList, true);
+                    break;
+                case HideDressModel.DressPart.SkinDress:
+                    EnabledDress(dressList, true);
+                    EnabledSkinDress(dressList, false);
+                    break;
+                case HideDressModel.DressPart.None:
+                    EnabledDress(dressList, true);
+                    EnabledSkinDress(dressList, true);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(dressPart), dressPart, null);
+            }
         }
 
         private static void EnabledDress(IEnumerable<Dress> dressEnumerable, bool enabled)
