@@ -15,7 +15,8 @@ namespace HideDress.Models
         {
             Both,
             Dress,
-            SkinDress
+            SkinDress,
+            None
         }
 
         private HideDressModel()

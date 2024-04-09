@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using BepInEx;
 using EFT;
 using EFT.Visual;
@@ -41,19 +40,20 @@ namespace HideDress
                 settingsModel.KeyOtherPlayerHideDress.Value = !settingsModel.KeyOtherPlayerHideDress.Value;
             }
 
-            if (hideDressModel.PlayerModelViewBody != null)
+            if (settingsModel.KeyPlayerHideDressPart.Value != HideDressModel.DressPart.None &&
+                hideDressModel.PlayerModelViewBody != null)
             {
                 EnabledPartDress(hideDressModel.PlayerModelViewBody, settingsModel.KeyPlayerHideDressPart.Value,
                     !settingsModel.KeyPlayerHideDress.Value);
             }
 
-            if (player != null)
+            if (settingsModel.KeyPlayerHideDressPart.Value != HideDressModel.DressPart.None && player != null)
             {
                 EnabledPartDress(player.PlayerBody, settingsModel.KeyPlayerHideDressPart.Value,
                     !settingsModel.KeyPlayerHideDress.Value);
             }
 
-            if (world != null)
+            if (settingsModel.KeyOtherPlayerHideDressPart.Value != HideDressModel.DressPart.None && world != null)
             {
                 foreach (var otherPlayer in _GameWorldHelper.AllOtherPlayer)
                 {
@@ -86,9 +86,9 @@ namespace HideDress
                 }
             }
 
-            EnabledDress(dressList.Where(x => x.GetType() == typeof(Dress)),
+            EnabledDress(dressList,
                 part == HideDressModel.DressPart.SkinDress || enabled);
-            EnabledSkinDress(dressList.Where(x => x is SkinDress || x is ArmBandView),
+            EnabledSkinDress(dressList,
                 part == HideDressModel.DressPart.Dress || enabled);
         }
 
@@ -96,6 +96,11 @@ namespace HideDress
         {
             foreach (var dress in dressEnumerable)
             {
+                var dressType = dress.GetType();
+
+                if (dressType != typeof(Dress))
+                    continue;
+
                 foreach (var renderer in ReflectionModel.Instance.RefRenderers.GetValue(dress))
                 {
                     renderer.enabled = enabled;
@@ -103,11 +108,16 @@ namespace HideDress
             }
         }
 
-        private static void EnabledSkinDress(IEnumerable<Dress> skinDressEnumerable, bool enabled)
+        private static void EnabledSkinDress(IEnumerable<Dress> dressEnumerable, bool enabled)
         {
-            foreach (var skinDress in skinDressEnumerable)
+            foreach (var dress in dressEnumerable)
             {
-                skinDress.gameObject.SetActive(enabled);
+                var dressType = dress.GetType();
+
+                if (dressType != typeof(SkinDress) || dressType != typeof(ArmBandView))
+                    continue;
+
+                dress.gameObject.SetActive(enabled);
             }
         }
     }
