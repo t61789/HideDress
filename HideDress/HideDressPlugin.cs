@@ -55,6 +55,9 @@ namespace HideDress
             {
                 foreach (var otherPlayer in _GameWorldHelper.AllOtherPlayer)
                 {
+                    if (otherPlayer == null)
+                        continue;
+
                     EnabledPartDress(otherPlayer.PlayerBody, settingsModel.KeyOtherPlayerHideDressPart.Value);
                 }
             }
