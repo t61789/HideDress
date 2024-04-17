@@ -131,7 +131,7 @@ namespace HideDress
             {
                 var dressType = dress.GetType();
 
-                if (dressType != typeof(SkinDress) || dressType != typeof(ArmBandView))
+                if (dressType != typeof(SkinDress) && dressType != typeof(ArmBandView))
                     continue;
 
                 dress.gameObject.SetActive(enabled);
