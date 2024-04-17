@@ -7,14 +7,14 @@ namespace HideDress.Models
     {
         public static SettingsModel Instance { get; private set; }
 
-        public readonly ConfigEntry<bool> KeyPlayerHideDress;
-        public readonly ConfigEntry<bool> KeyOtherPlayerHideDress;
+        public readonly ConfigEntry<bool> KeyUpdatePlayerHideDress;
+        public readonly ConfigEntry<bool> KeyUpdateOtherPlayerHideDress;
 
         public readonly ConfigEntry<HideDressModel.DressPart> KeyPlayerHideDressPart;
         public readonly ConfigEntry<HideDressModel.DressPart> KeyOtherPlayerHideDressPart;
 
-        public readonly ConfigEntry<KeyboardShortcut> KeyPlayerHideDressShortcut;
-        public readonly ConfigEntry<KeyboardShortcut> KeyOtherPlayerHideDressShortcut;
+        public readonly ConfigEntry<KeyboardShortcut> KeyUpdatePlayerHideDressShortcut;
+        public readonly ConfigEntry<KeyboardShortcut> KeyUpdateOtherPlayerHideDressShortcut;
 
         [SuppressMessage("ReSharper", "RedundantTypeArgumentsOfMethod")]
         private SettingsModel(ConfigFile configFile)
@@ -23,8 +23,8 @@ namespace HideDress.Models
             const string hideDressPartSettings = "Hide Dress Part Settings";
             const string shortcutSettings = "Keyboard Shortcut Settings";
 
-            KeyPlayerHideDress = configFile.Bind<bool>(hideDressSettings, "Hide Player Dress", false);
-            KeyOtherPlayerHideDress = configFile.Bind<bool>(hideDressSettings, "Hide Other Player Dress", false);
+            KeyUpdatePlayerHideDress = configFile.Bind<bool>(hideDressSettings, "Update Hide Player Dress", false);
+            KeyUpdateOtherPlayerHideDress = configFile.Bind<bool>(hideDressSettings, "Update Hide Other Player Dress", false);
 
             KeyPlayerHideDressPart =
                 configFile.Bind<HideDressModel.DressPart>(hideDressPartSettings, "Player",
@@ -33,11 +33,11 @@ namespace HideDress.Models
                 configFile.Bind<HideDressModel.DressPart>(hideDressPartSettings, "Other Player",
                     HideDressModel.DressPart.Both);
 
-            KeyPlayerHideDressShortcut =
-                configFile.Bind<KeyboardShortcut>(shortcutSettings, "Hide Player Dress",
+            KeyUpdatePlayerHideDressShortcut =
+                configFile.Bind<KeyboardShortcut>(shortcutSettings, "Update Hide Player Dress",
                     KeyboardShortcut.Empty);
-            KeyOtherPlayerHideDressShortcut =
-                configFile.Bind<KeyboardShortcut>(shortcutSettings, "Hide Other Player Dress", KeyboardShortcut.Empty);
+            KeyUpdateOtherPlayerHideDressShortcut =
+                configFile.Bind<KeyboardShortcut>(shortcutSettings, "Update Hide Other Player Dress", KeyboardShortcut.Empty);
         }
 
         // ReSharper disable once UnusedMethodReturnValue.Global

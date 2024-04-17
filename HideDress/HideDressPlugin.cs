@@ -31,27 +31,27 @@ namespace HideDress
             var settingsModel = SettingsModel.Instance;
             var hideDressModel = HideDressModel.Instance;
 
-            if (settingsModel.KeyPlayerHideDressShortcut.Value.IsDown())
+            if (settingsModel.KeyUpdatePlayerHideDressShortcut.Value.IsDown())
             {
-                settingsModel.KeyPlayerHideDress.Value = !settingsModel.KeyPlayerHideDress.Value;
+                settingsModel.KeyUpdatePlayerHideDress.Value = !settingsModel.KeyUpdatePlayerHideDress.Value;
             }
 
-            if (settingsModel.KeyOtherPlayerHideDressShortcut.Value.IsDown())
+            if (settingsModel.KeyUpdateOtherPlayerHideDressShortcut.Value.IsDown())
             {
-                settingsModel.KeyOtherPlayerHideDress.Value = !settingsModel.KeyOtherPlayerHideDress.Value;
+                settingsModel.KeyUpdateOtherPlayerHideDress.Value = !settingsModel.KeyUpdateOtherPlayerHideDress.Value;
             }
 
-            if (settingsModel.KeyPlayerHideDress.Value && hideDressModel.PlayerModelViewBody != null)
+            if (settingsModel.KeyUpdatePlayerHideDress.Value && hideDressModel.PlayerModelViewBody != null)
             {
                 EnabledPartDress(hideDressModel.PlayerModelViewBody, settingsModel.KeyPlayerHideDressPart.Value);
             }
 
-            if (settingsModel.KeyPlayerHideDress.Value && player != null)
+            if (settingsModel.KeyUpdatePlayerHideDress.Value && player != null)
             {
                 EnabledPartDress(player.PlayerBody, settingsModel.KeyPlayerHideDressPart.Value);
             }
 
-            if (settingsModel.KeyOtherPlayerHideDress.Value && world != null)
+            if (settingsModel.KeyUpdateOtherPlayerHideDress.Value && world != null)
             {
                 foreach (var otherPlayer in _GameWorldHelper.AllOtherPlayer)
                 {

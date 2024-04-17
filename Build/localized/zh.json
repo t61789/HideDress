@@ -1,10 +1,10 @@
 {
-    "HideDress": "隐藏服饰",
-    "Hide Dress Settings": "隐藏服饰设置",
-    "Hide Dress Part Settings": "隐藏服饰部位设置",
-    "Keyboard Shortcut Settings": "快捷键设置",
-    "Hide Player Dress": "隐藏玩家服饰",
-    "Hide Other Player Dress": "隐藏其他玩家服饰",
-    "Player": "玩家",
-    "Other Player": "其他玩家"
+  "HideDress": "隐藏服饰",
+  "Hide Dress Settings": "隐藏服饰设置",
+  "Hide Dress Part Settings": "隐藏服饰部位设置",
+  "Keyboard Shortcut Settings": "快捷键设置",
+  "Update Hide Player Dress": "更新隐藏玩家服饰",
+  "Update Hide Other Player Dress": "更新隐藏其他玩家服饰",
+  "Player": "玩家",
+  "Other Player": "其他玩家"
 }
