@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("kmyuhkyuk-HideDress")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("https://hub.sp-tarkov.com/files/file/583-skin-hide")]
+[assembly: AssemblyCompany("https://hub.sp-tarkov.com/files/file/654-hide-dress")]
 [assembly: AssemblyProduct("HideDress")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
