@@ -9,8 +9,8 @@ using static EFTApi.EFTHelpers;
 
 namespace HideDress
 {
-    [BepInPlugin("com.kmyuhkyuk.HideDress", "HideDress", "1.2.7")]
-    [BepInDependency("com.kmyuhkyuk.EFTApi", "1.2.0")]
+    [BepInPlugin("com.kmyuhkyuk.HideDress", "HideDress", "1.3.0")]
+    [BepInDependency("com.kmyuhkyuk.EFTApi", "1.2.1")]
     [EFTConfigurationPluginAttributes("https://hub.sp-tarkov.com/files/file/583-skin-hide")]
     public partial class HideDressPlugin : BaseUnityPlugin
     {
@@ -72,7 +72,6 @@ namespace HideDress
             var slotList = reflectionModel.RefSlotList.GetValue(slotViews);
 
             var dressList = new List<Dress>();
-
             foreach (var slot in slotList)
             {
                 var dresses = reflectionModel.RefDresses.GetValue(slot);

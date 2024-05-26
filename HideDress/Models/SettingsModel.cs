@@ -24,7 +24,8 @@ namespace HideDress.Models
             const string shortcutSettings = "Keyboard Shortcut Settings";
 
             KeyUpdatePlayerHideDress = configFile.Bind<bool>(hideDressSettings, "Update Hide Player Dress", false);
-            KeyUpdateOtherPlayerHideDress = configFile.Bind<bool>(hideDressSettings, "Update Hide Other Player Dress", false);
+            KeyUpdateOtherPlayerHideDress =
+                configFile.Bind<bool>(hideDressSettings, "Update Hide Other Player Dress", false);
 
             KeyPlayerHideDressPart =
                 configFile.Bind<HideDressModel.DressPart>(hideDressPartSettings, "Player",
@@ -37,7 +38,8 @@ namespace HideDress.Models
                 configFile.Bind<KeyboardShortcut>(shortcutSettings, "Update Hide Player Dress",
                     KeyboardShortcut.Empty);
             KeyUpdateOtherPlayerHideDressShortcut =
-                configFile.Bind<KeyboardShortcut>(shortcutSettings, "Update Hide Other Player Dress", KeyboardShortcut.Empty);
+                configFile.Bind<KeyboardShortcut>(shortcutSettings, "Update Hide Other Player Dress",
+                    KeyboardShortcut.Empty);
         }
 
         // ReSharper disable once UnusedMethodReturnValue.Global
