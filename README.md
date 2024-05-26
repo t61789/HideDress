@@ -1,6 +1,6 @@
 # HideDress
 
-Hide Player Dress
+Hide your or other player dress
 
 ## How build the source
 1. Dowload or Clone the branch
