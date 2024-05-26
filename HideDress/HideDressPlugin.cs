@@ -41,21 +41,21 @@ namespace HideDress
                 settingsModel.KeyUpdateOtherPlayerHideDress.Value = !settingsModel.KeyUpdateOtherPlayerHideDress.Value;
             }
 
-            if (settingsModel.KeyUpdatePlayerHideDress.Value && hideDressModel.PlayerModelViewBody != null)
+            if (settingsModel.KeyUpdatePlayerHideDress.Value && hideDressModel.PlayerModelViewBody)
             {
                 EnabledPartDress(hideDressModel.PlayerModelViewBody, settingsModel.KeyPlayerHideDressPart.Value);
             }
 
-            if (settingsModel.KeyUpdatePlayerHideDress.Value && player != null)
+            if (settingsModel.KeyUpdatePlayerHideDress.Value && player)
             {
                 EnabledPartDress(player.PlayerBody, settingsModel.KeyPlayerHideDressPart.Value);
             }
 
-            if (settingsModel.KeyUpdateOtherPlayerHideDress.Value && world != null)
+            if (settingsModel.KeyUpdateOtherPlayerHideDress.Value && world)
             {
                 foreach (var otherPlayer in _GameWorldHelper.AllOtherPlayer)
                 {
-                    if (otherPlayer == null)
+                    if (!otherPlayer)
                         continue;
 
                     EnabledPartDress(otherPlayer.PlayerBody, settingsModel.KeyOtherPlayerHideDressPart.Value);

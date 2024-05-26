@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using EFT;
 using EFT.UI;
 using EFT.Visual;
@@ -16,7 +16,7 @@ namespace HideDress.Models
 
         public readonly RefHelper.FieldRef<PlayerBody, object> RefSlotViews;
 
-        public readonly RefHelper.FieldRef<object, IEnumerable<object>> RefSlotList;
+        public readonly RefHelper.FieldRef<object, IList> RefSlotList;
 
         public readonly RefHelper.FieldRef<object, Dress[]> RefDresses;
 
@@ -27,7 +27,7 @@ namespace HideDress.Models
         private ReflectionModel()
         {
             RefSlotViews = RefHelper.FieldRef<PlayerBody, object>.Create("SlotViews");
-            RefSlotList = RefHelper.FieldRef<object, IEnumerable<object>>.Create(RefSlotViews.FieldType, "list_0");
+            RefSlotList = RefHelper.FieldRef<object, IList>.Create(RefSlotViews.FieldType, "list_0");
             RefDresses =
                 RefHelper.FieldRef<object, Dress[]>.Create(RefSlotList.FieldType.GetGenericArguments()[0], "Dresses");
             RefRenderers = RefHelper.FieldRef<Dress, Renderer[]>.Create("Renderers");
