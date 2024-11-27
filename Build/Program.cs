@@ -17,9 +17,9 @@ namespace Build
             var sha = Copy.GetTipSha(args.ElementAtOrDefault(1));
 
             const string modPath =
-                @"R:\Battlestate Games\Client.0.14.1.2.29197\BepInEx\plugins\kmyuhkyuk-HideDress";
+                @"R:\Battlestate Games\Client.0.15.5.1.33420\BepInEx\plugins\kmyuhkyuk-HideDress";
 
-            var versionName = "1.3.0";
+            const string versionName = "1.3.0";
 
             var releaseName = $"{new DirectoryInfo(modPath).Name}-(Release_{versionName}).7z";
 
