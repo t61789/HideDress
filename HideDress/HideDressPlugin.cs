@@ -9,7 +9,7 @@ using static EFTApi.EFTHelpers;
 
 namespace HideDress
 {
-    [BepInPlugin("com.kmyuhkyuk.HideDress", "HideDress", "1.3.0")]
+    [BepInPlugin("com.kmyuhkyuk.HideDress", "HideDress", "1.3.1")]
     [BepInDependency("com.kmyuhkyuk.EFTApi", "1.2.1")]
     [EFTConfigurationPluginAttributes("https://hub.sp-tarkov.com/files/file/654-hide-dress")]
     public partial class HideDressPlugin : BaseUnityPlugin

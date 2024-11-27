@@ -19,7 +19,7 @@ namespace Build
             const string modPath =
                 @"R:\Battlestate Games\Client.0.15.5.1.33420\BepInEx\plugins\kmyuhkyuk-HideDress";
 
-            const string versionName = "1.3.0";
+            const string versionName = "1.3.1";
 
             var releaseName = $"{new DirectoryInfo(modPath).Name}-(Release_{versionName}).7z";
 
