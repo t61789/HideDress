@@ -3,7 +3,7 @@
 Hide your or other player dress
 
 ## How build the source
-1. Dowload or Clone the branch
-2. Visual Studio open SkinHider.sln
-3. using project need dll
-4. build SkinHide.dll to bin\Debug
+1. Clone master branch
+2. Open HideDress.sln with Visual Studio
+3. References dll required by project
+4. Build HideDress
