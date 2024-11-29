@@ -6,40 +6,117 @@ namespace HideDress.Models
     internal class SettingsModel
     {
         public static SettingsModel Instance { get; private set; }
+        
+        public readonly ConfigEntry<bool> EnableHiding;
+        public readonly ConfigEntry<string> SpecifiedOtherNickName;
+        public readonly ConfigEntry<float> UpdateInterval;
+        public readonly ConfigEntry<KeyboardShortcut> SwitchHidingShortcut;
 
-        public readonly ConfigEntry<bool> KeyUpdatePlayerHideDress;
-        public readonly ConfigEntry<bool> KeyUpdateOtherPlayerHideDress;
-
-        public readonly ConfigEntry<HideDressModel.DressPart> KeyPlayerHideDressPart;
-        public readonly ConfigEntry<HideDressModel.DressPart> KeyOtherPlayerHideDressPart;
-
-        public readonly ConfigEntry<KeyboardShortcut> KeyUpdatePlayerHideDressShortcut;
-        public readonly ConfigEntry<KeyboardShortcut> KeyUpdateOtherPlayerHideDressShortcut;
+        public readonly ConfigEntry<bool> PlayerHideBackpack;
+        public readonly ConfigEntry<bool> PlayerHideArmorVest;
+        public readonly ConfigEntry<bool> PlayerHideTacticalVest;
+        public readonly ConfigEntry<bool> PlayerHideHeadWear;
+        public readonly ConfigEntry<bool> PlayerHideEarPiece;
+        public readonly ConfigEntry<bool> PlayerHideEyeWear;
+        public readonly ConfigEntry<bool> PlayerHideArmBand;
+        public readonly ConfigEntry<bool> PlayerHideFaceCover;
+        public readonly ConfigEntry<bool> OtherHideBackpack;
+        public readonly ConfigEntry<bool> OtherHideArmorVest;
+        public readonly ConfigEntry<bool> OtherHideTacticalVest;
+        public readonly ConfigEntry<bool> OtherHideHeadWear;
+        public readonly ConfigEntry<bool> OtherHideEarPiece;
+        public readonly ConfigEntry<bool> OtherHideEyeWear;
+        public readonly ConfigEntry<bool> OtherHideArmBand;
+        public readonly ConfigEntry<bool> OtherHideFaceCover;
 
         [SuppressMessage("ReSharper", "RedundantTypeArgumentsOfMethod")]
         private SettingsModel(ConfigFile configFile)
         {
-            const string hideDressSettings = "Hide Dress Settings";
-            const string hideDressPartSettings = "Hide Dress Part Settings";
-            const string shortcutSettings = "Keyboard Shortcut Settings";
-
-            KeyUpdatePlayerHideDress = configFile.Bind<bool>(hideDressSettings, "Update Hide Player Dress", false);
-            KeyUpdateOtherPlayerHideDress =
-                configFile.Bind<bool>(hideDressSettings, "Update Hide Other Player Dress", false);
-
-            KeyPlayerHideDressPart =
-                configFile.Bind<HideDressModel.DressPart>(hideDressPartSettings, "Player",
-                    HideDressModel.DressPart.Both);
-            KeyOtherPlayerHideDressPart =
-                configFile.Bind<HideDressModel.DressPart>(hideDressPartSettings, "Other Player",
-                    HideDressModel.DressPart.Both);
-
-            KeyUpdatePlayerHideDressShortcut =
-                configFile.Bind<KeyboardShortcut>(shortcutSettings, "Update Hide Player Dress",
+            const string hideSettingsSection = "Hide Settings";
+            EnableHiding = configFile.Bind<bool>(
+                hideSettingsSection, 
+                "Enable Hiding", 
+                true);
+            SpecifiedOtherNickName = configFile.Bind<string>(
+                hideSettingsSection,
+                "Only Hide Specified Character By Nick Name (except your player)",
+                "");       
+            SwitchHidingShortcut =
+                configFile.Bind<KeyboardShortcut>(
+                    hideSettingsSection, 
+                    "Switch Hiding Shortcut",
                     KeyboardShortcut.Empty);
-            KeyUpdateOtherPlayerHideDressShortcut =
-                configFile.Bind<KeyboardShortcut>(shortcutSettings, "Update Hide Other Player Dress",
-                    KeyboardShortcut.Empty);
+            UpdateInterval = 
+                configFile.Bind<float>(
+                    hideSettingsSection, 
+                    "Update Interval",
+                    2);
+            
+            const string hideDressPartSettingsSection = "Hide Part Settings";
+            PlayerHideBackpack = configFile.Bind<bool>(
+                hideDressPartSettingsSection,
+                "Hide Player Backpack",
+                false);       
+            PlayerHideArmorVest = configFile.Bind<bool>(
+                hideDressPartSettingsSection,
+                "Hide Player Armor Vest",
+                true);       
+            PlayerHideTacticalVest = configFile.Bind<bool>(
+                hideDressPartSettingsSection,
+                "Hide Player Tactical Vest",
+                true);       
+            PlayerHideHeadWear = configFile.Bind<bool>(
+                hideDressPartSettingsSection,
+                "Hide Player Head Wear",
+                true);       
+            PlayerHideEarPiece = configFile.Bind<bool>(
+                hideDressPartSettingsSection,
+                "Hide Player Ear Piece",
+                false);       
+            PlayerHideEyeWear = configFile.Bind<bool>(
+                hideDressPartSettingsSection,
+                "Hide Player Eye Wear",
+                false);       
+            PlayerHideArmBand = configFile.Bind<bool>(
+                hideDressPartSettingsSection,
+                "Hide Player Arm Band",
+                false);       
+            PlayerHideFaceCover = configFile.Bind<bool>(
+                hideDressPartSettingsSection,
+                "Hide Player Face Cover",
+                true);       
+            OtherHideBackpack = configFile.Bind<bool>(
+                hideDressPartSettingsSection,
+                "Hide Other Backpack",
+                false);       
+            OtherHideArmorVest = configFile.Bind<bool>(
+                hideDressPartSettingsSection,
+                "Hide Other Armor Vest",
+                true);       
+            OtherHideTacticalVest = configFile.Bind<bool>(
+                hideDressPartSettingsSection,
+                "Hide Other Tactical Vest",
+                true);       
+            OtherHideHeadWear = configFile.Bind<bool>(
+                hideDressPartSettingsSection,
+                "Hide Other Head Wear",
+                true);       
+            OtherHideEarPiece = configFile.Bind<bool>(
+                hideDressPartSettingsSection,
+                "Hide Other Ear Piece",
+                false);       
+            OtherHideEyeWear = configFile.Bind<bool>(
+                hideDressPartSettingsSection,
+                "Hide Other Eye Wear",
+                false);       
+            OtherHideArmBand = configFile.Bind<bool>(
+                hideDressPartSettingsSection,
+                "Hide Other Arm Band",
+                false);       
+            OtherHideFaceCover = configFile.Bind<bool>(
+                hideDressPartSettingsSection,
+                "Hide Other Face Cover",
+                true);       
         }
 
         // ReSharper disable once UnusedMethodReturnValue.Global

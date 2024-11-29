@@ -31,35 +31,43 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>kmyuhkyuk.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>F:\Games\逃离塔科夫\游戏本体\Client.0.14.9.1.30626\BepInEx\core\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="0Harmony, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>R:\Battlestate Games\Client.0.12.12.15.17349\BepInEx\core\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>R:\Battlestate Games\Client.0.12.12.15.17349\EscapeFromTarkov_Data\Managed\Assembly-CSharp.dll</HintPath>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>F:\Games\逃离塔科夫\游戏本体\Client.0.14.9.1.30626\EscapeFromTarkov_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx">
-      <HintPath>R:\Battlestate Games\Client.0.12.12.15.17349\BepInEx\core\BepInEx.dll</HintPath>
+      <HintPath>F:\Games\逃离塔科夫\游戏本体\Client.0.14.9.1.30626\BepInEx\core\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="EFTApi">
-      <HintPath>..\..\EFTApi\Build\bin\Current\EFTApi.dll</HintPath>
+      <HintPath>F:\Games\逃离塔科夫\游戏本体\Client.0.14.9.1.30626\BepInEx\plugins\kmyuhkyuk-EFTApi\EFTApi.dll</HintPath>
     </Reference>
     <Reference Include="EFTReflection">
-      <HintPath>..\..\EFTApi\Build\bin\Current\EFTReflection.dll</HintPath>
+      <HintPath>F:\Games\逃离塔科夫\游戏本体\Client.0.14.9.1.30626\BepInEx\plugins\kmyuhkyuk-EFTApi\EFTReflection.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.Serialization, Version=3.0.4.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="UnityEngine">
+      <HintPath>F:\Games\逃离塔科夫\游戏本体\Client.0.14.9.1.30626\EscapeFromTarkov_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>R:\Battlestate Games\Client.0.12.12.15.17349\EscapeFromTarkov_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>F:\Games\逃离塔科夫\游戏本体\Client.0.14.9.1.30626\EscapeFromTarkov_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

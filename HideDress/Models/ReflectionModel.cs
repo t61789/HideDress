@@ -16,6 +16,7 @@ namespace HideDress.Models
 
         public readonly RefHelper.FieldRef<PlayerBody, object> RefSlotViews;
 
+        public readonly RefHelper.FieldRef<object, IDictionary> RefSlotDic;
         public readonly RefHelper.FieldRef<object, IList> RefSlotList;
 
         public readonly RefHelper.FieldRef<object, Dress[]> RefDresses;
@@ -27,6 +28,7 @@ namespace HideDress.Models
         private ReflectionModel()
         {
             RefSlotViews = RefHelper.FieldRef<PlayerBody, object>.Create("SlotViews");
+            RefSlotDic = RefHelper.FieldRef<object, IDictionary>.Create(RefSlotViews.FieldType, "dictionary_0");
             RefSlotList = RefHelper.FieldRef<object, IList>.Create(RefSlotViews.FieldType, "list_0");
             RefDresses =
                 RefHelper.FieldRef<object, Dress[]>.Create(RefSlotList.FieldType.GetGenericArguments()[0], "Dresses");
